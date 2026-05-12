@@ -44,7 +44,7 @@ const AICopilot: React.FC = () => {
 
   useEffect(scrollToBottom, [messages]);
 
-  const handleSend = () => {
+  const handleSend = async () => {
     if (!input.trim()) return;
 
     const userMessage: Message = { id: Date.now().toString(), role: 'user', content: input };
@@ -52,16 +52,9 @@ const AICopilot: React.FC = () => {
     setInput('');
     setIsTyping(true);
 
-    // Simulate AI reasoning and streaming response
-    setTimeout(() => {
-      const riskCount = workflows.filter(w => w.status === 'SLA_RISK').length;
-      let response = "I'm monitoring the orchestration pulse. How can I assist with your workflows today?";
-      
-      if (input.toLowerCase().includes('risk') || input.toLowerCase().includes('bottleneck')) {
-        response = `Current analysis shows ${riskCount} workflows in SLA_RISK state. The highest congestion is in the ${workflows[0]?.department || 'Finance'} department. I recommend immediate re-routing of high-priority approvals to optimize throughput.`;
-      } else if (input.toLowerCase().includes('optimize')) {
-        response = `Optimization protocol initiated. By redistributing load from ${workflows[0]?.department} to ${workflows[1]?.department}, we can project a 12% reduction in processing latency. Shall I proceed?`;
-      }
+    try {
+      const context = `Workflows: ${JSON.stringify(workflows.slice(0, 5))}. Analytics: ${JSON.stringify(analytics)}`;
+      const response = await apiService.queryCopilot(input, context);
 
       setIsTyping(false);
       
@@ -88,8 +81,12 @@ const AICopilot: React.FC = () => {
           setMessages(prev => prev.map(m => m.id === assistantMessage.id ? { ...m, status: 'done' } : m));
           clearInterval(interval);
         }
-      }, 50);
-    }, 1000);
+      }, 30);
+    } catch (error) {
+      console.error("AI Copilot Error:", error);
+      setIsTyping(false);
+      setMessages(prev => [...prev, { id: Date.now().toString(), role: 'assistant', content: "I'm having trouble connecting to the orchestration intelligence layer. Please verify the system status." }]);
+    }
   };
 
 

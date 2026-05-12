@@ -1,73 +1,111 @@
-# React + TypeScript + Vite
+# SAP Cognitive Workflow Orchestra
+### Elite AI-Native Enterprise Orchestration Operating System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![SAP Orchestra](https://img.shields.io/badge/SAP-Orchestra-008FD3?style=for-the-badge&logo=sap&logoColor=white)
+![AI-Native](https://img.shields.io/badge/AI--Native-Intelligence-blueviolet?style=for-the-badge)
+![FastAPI](https://img.shields.io/badge/FastAPI-Backend-009688?style=for-the-badge&logo=fastapi&logoColor=white)
+![React](https://img.shields.io/badge/React-Frontend-61DAFB?style=for-the-badge&logo=react&logoColor=black)
 
-Currently, two official plugins are available:
+The **SAP Cognitive Workflow Orchestra** is a next-generation enterprise operating system designed for high-end operational orchestration. It combines a cinematic, glassmorphic frontend with a technically legitimate, AI-powered backend to provide real-time workflow intelligence, graph-based bottleneck detection, and executive-grade risk analysis.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## 🌌 Core Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### 💎 Immersive Enterprise Experience (World 1)
+- **Elite Cinematic UI**: Glassmorphic design system with premium motion physics.
+- **Interactive Workflow Graph**: Real-time relationship mapping of enterprise processes.
+- **AI Copilot**: Context-aware orchestration assistant with streaming capabilities.
+- **Operational Overlays**: Cinematic data visualizations for system health and throughput.
 
-## Expanding the ESLint configuration
+### 🧠 Intelligence & Orchestration (World 2)
+- **FastAPI Orchestration Backend**: A modular, scalable Python backend powering the intelligence layer.
+- **Graph Intelligence Engine**: Powered by **NetworkX**, calculating betweenness centrality for bottleneck detection and risk propagation.
+- **AI Routing Engine**: Intelligent model selection via **OpenRouter** (DeepSeek, Qwen, Gemini, Llama) based on task complexity.
+- **Enterprise Workflow Logic**: Automated SLA breach detection, escalation triggers, and priority-aware routing.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### 🏢 SAP Legitimacy Layer
+- **Mock OData V2 Services**: Support for SAP UI5 and legacy system integration.
+- **CDS View Integration**: Virtualized SAP ABAP CDS views for high-performance analytics.
+- **Role-Based Access Control (RBAC)**: Fine-grained permissions for Admins, Managers, and Reviewers.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## 🛠 Technology Stack
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### Frontend
+- **Framework**: React 18 + TypeScript + Vite
+- **Styling**: Vanilla CSS (High-Performance Glassmorphism)
+- **Visualization**: React Force Graph / D3.js
+- **State Management**: Zustand / Custom Hooks
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Backend
+- **Framework**: FastAPI (Async)
+- **Intelligence**: OpenRouter (Multi-Model Orchestration)
+- **Graph Theory**: NetworkX
+- **Database**: SQLAlchemy + PostgreSQL (Supabase compatible)
+- **Utilities**: Pydantic v2, HTTPX, Python-Dotenv
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+---
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js (v18+)
+- Python (3.9+)
+- OpenRouter API Key
+
+### Backend Setup
+1. Navigate to the `backend/` directory.
+2. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+3. Configure environment variables in `.env`:
+   ```env
+   OPENROUTER_API_KEY=your_key_here
+   DATABASE_URL=sqlite:///./sap_orchestra.db
+   ```
+4. Seed the database:
+   ```bash
+   python -m backend.utils.seed_db
+   ```
+5. Start the API server:
+   ```bash
+   python -m backend.main
+   ```
+
+### Frontend Setup
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+2. Start the development server:
+   ```bash
+   npm run dev
+   ```
+
+---
+
+## 📡 API Architecture
+
+The system exposes a comprehensive suite of enterprise-grade APIs:
+
+- `GET /api/workflows`: Live orchestration state.
+- `POST /api/risk-analysis`: AI-driven propagation analysis.
+- `GET /api/graph`: Topology and bottleneck metadata.
+- `POST /api/copilot/query`: Orchestration-aware AI assistant.
+- `GET /api/sap/odata/v2`: SAP-compatible data streams.
+
+---
+
+## 🛡 Security & Auth
+
+The platform implements a production-ready auth structure:
+- **JWT-based Authentication**
+- **Role-Based Access Control (RBAC)**
+- **Department-level Isolation**
+
+---
+
+*“A real AI-native enterprise workflow intelligence platform powering operational orchestration across a global organization.”*
