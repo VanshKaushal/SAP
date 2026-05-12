@@ -1,0 +1,150 @@
+.navbar {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  border-bottom: 1px solid var(--glass-border);
+  z-index: 90;
+  position: sticky;
+  top: 0;
+}
+
+.navbar-left {
+  display: flex;
+  gap: 24px;
+}
+
+.status-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.status-label {
+  color: var(--text-dim);
+}
+
+.status-value {
+  color: var(--text-primary);
+}
+
+.navbar-center {
+  flex: 1;
+  max-width: 500px;
+  padding: 0 24px;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  border-radius: 12px;
+  gap: 12px;
+  color: var(--text-secondary);
+}
+
+.search-bar input {
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  width: 100%;
+  font-size: 14px;
+  outline: none;
+}
+
+.search-shortcut {
+  font-size: 10px;
+  padding: 2px 6px;
+  background: var(--bg-slate);
+  border-radius: 4px;
+  color: var(--text-dim);
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.live-counters {
+  display: flex;
+  gap: 16px;
+  margin-right: 8px;
+}
+
+.counter-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.counter-value {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1;
+}
+
+.counter-label {
+  font-size: 9px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.counter-item.danger .counter-value {
+  color: #ff453a;
+}
+
+.nav-action-btn {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.nav-action-btn:hover {
+  background: var(--bg-slate);
+  color: var(--text-primary);
+}
+
+.notification-badge {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 14px;
+  height: 14px;
+  background: #ff453a;
+  border-radius: 50%;
+  font-size: 9px;
+  font-weight: 700;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--bg-matte);
+}
+
+.nav-divider {
+  width: 1px;
+  height: 24px;
+  background: var(--glass-border);
+}
+
+.enterprise-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 4px 8px;
+  border: 1px solid #ffd700;
+  color: #ffd700;
+  border-radius: 4px;
+  letter-spacing: 1px;
+}

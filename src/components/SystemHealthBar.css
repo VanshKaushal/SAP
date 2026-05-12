@@ -1,0 +1,61 @@
+.system-health-bar {
+  display: flex;
+  align-items: center;
+  padding: 8px 20px;
+  gap: 24px;
+  border-radius: 100px;
+  margin-bottom: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  font-family: 'Inter', monospace;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  background: rgba(10, 10, 10, 0.6);
+  backdrop-filter: blur(20px);
+}
+
+.health-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.label {
+  color: var(--text-dim);
+  font-weight: 600;
+}
+
+.value {
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+.status-indicator {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.status-indicator.online {
+  background: var(--accent-teal);
+  box-shadow: 0 0 8px var(--accent-teal);
+  animation: pulse 2s infinite;
+}
+
+.divider {
+  width: 1px;
+  height: 16px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.mini-progress {
+  width: 60px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan));
+}
