@@ -1,23 +1,15 @@
 import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  CheckCircle2, 
-  XCircle, 
-  Clock, 
   AlertTriangle,
-  ExternalLink,
-  Filter,
-  MoreVertical,
-  ShieldAlert
+  Filter
 } from 'lucide-react';
 import { useWorkflowStore } from '../hooks/useWorkflowStore';
 import './ApprovalCenter.css';
 
 const ApprovalCenter: React.FC = () => {
-  const { workflows, approveWorkflow, rejectWorkflow } = useWorkflowStore();
+  const { workflows } = useWorkflowStore();
   const safeWorkflows = workflows ?? [];
 
-  const pendingWorkflows = safeWorkflows.filter(w => w?.status !== 'APPROVED' && w?.status !== 'REJECTED');
   const escalations = safeWorkflows.filter(w => w?.status === 'ESCALATED').length;
 
   return (

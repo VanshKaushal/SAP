@@ -6,13 +6,9 @@ import {
   MessageSquare, 
   CheckSquare, 
   BarChart3, 
-  ShieldAlert, 
-  Activity, 
-  Users, 
   Settings,
   ChevronLeft,
-  ChevronRight,
-  BrainCircuit
+  ChevronRight
 } from 'lucide-react';
 import type { Screen } from '../types/navigation';
 import './Sidebar.css';

@@ -1,0 +1,46 @@
+<mvc:View
+    controllerName="ui5.approval.center.controller.App"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns="sap.m"
+    xmlns:f="sap.f">
+    <f:DynamicPage id="dynamicPageId" headerExpanded="true" toggleHeaderOnTitleClick="true">
+        <f:title>
+            <f:DynamicPageTitle>
+                <f:heading>
+                    <Title text="Approval Center"/>
+                </f:heading>
+            </f:DynamicPageTitle>
+        </f:title>
+        <f:content>
+            <Table id="approvalsTable"
+                items="{
+                    path: '/Approvals',
+                    parameters: {
+                        $expand: 'workflow,reviewer'
+                    }
+                }"
+                class="sapFDynamicPageAlignContent"
+                width="auto">
+                <columns>
+                    <Column><Text text="Workflow Title"/></Column>
+                    <Column><Text text="Status"/></Column>
+                    <Column><Text text="Priority"/></Column>
+                    <Column><Text text="Reviewer"/></Column>
+                    <Column><Text text="SLA Deadline"/></Column>
+                </columns>
+                <items>
+                    <ColumnListItem>
+                        <cells>
+                            <ObjectIdentifier title="{workflow/title}" text="{workflow/id}"/>
+                            <ObjectStatus text="{workflow/status}" state="{= ${workflow/status} === 'APPROVED' ? 'Success' : ${workflow/status} === 'REJECTED' ? 'Error' : 'Warning' }"/>
+                            <Text text="{workflow/priority}"/>
+                            <Text text="{reviewer/email}"/>
+                            <Text text="{path: 'workflow/slaDeadline', type: 'sap.ui.model.type.DateTime'}"/>
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </f:content>
+    </f:DynamicPage>
+</mvc:View>

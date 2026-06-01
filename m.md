@@ -1,350 +1,315 @@
-MISSION: SAP-IFICATION PROGRAM (NO REBUILD)
+MISSION: SAP COGNITIVE WORKFLOW ORCHESTRA — FORENSIC DEAD CODE ELIMINATION AUDIT
 
-PROJECT:
-SAP Cognitive Workflow Orchestra
+CRITICAL OBJECTIVE
 
-CURRENT STATUS
+Perform a full forensic analysis of the entire repository.
 
-The platform already contains:
+DO NOT add features.
 
-* React Frontend
-* TypeScript
-* Vite
-* FastAPI Backend
-* SQLAlchemy Persistence
+DO NOT redesign UI.
+
+DO NOT modify business logic unless required.
+
+The sole mission is:
+
+Identify and safely remove:
+
+* dead files
+* dead folders
+* dead imports
+* dead exports
+* dead components
+* dead services
+* dead hooks
+* dead routes
+* dead APIs
+* dead models
+* dead CSS
+* dead assets
+* duplicate implementations
+* abandoned SAP mock layers
+
+WITHOUT breaking:
+
+* React frontend
+* FastAPI backend
+* SAP CAP backend
+* OpenUI5 applications
+* OData services
 * AI Copilot
 * Workflow Engine
 * Risk Engine
 * Analytics Engine
-* Notification Engine
-* Graph Intelligence
-* Approval Center
-* User Management
-* Executive Dashboard
-
-The platform is feature-rich.
-
-The problem is NOT missing functionality.
-
-The problem is insufficient SAP identity.
-
-Current perception:
-
-"AI Workflow Platform"
-
-Target perception:
-
-"SAP AI-Native Workflow Orchestration Platform"
-
-ABSOLUTE RULE
-
-DO NOT:
-
-* rebuild frontend
-* delete React
-* rewrite application in UI5
-* restart project
-* remove existing architecture
-
-Instead:
-
-SAP-IFY the existing platform.
 
 ==================================================
-PROGRAM OBJECTIVE
-=================
-
-Transform the platform into something a recruiter can legitimately associate with:
-
-* SAP UI5
-* SAP Fiori
-* SAP BTP
-* SAP OData
-* SAP CDS
-* SAP Workflow Architecture
-
-while preserving the existing engineering investment.
-
-==================================================
-PHASE 1
-SAP ARCHITECTURE LAYER
-======================
-
-Create a dedicated:
-
-docs/sap-architecture/
+PHASE 1 — REPOSITORY FORENSICS
+==============================
 
 Generate:
 
-1. System Architecture Diagram
-2. SAP BTP Deployment Diagram
-3. OData Service Map
-4. Workflow Orchestration Diagram
-5. AI Governance Diagram
+FORENSIC_FILE_INVENTORY.md
 
-Target Architecture:
+Scan every file.
 
-SAP UI5 / Fiori
-↓
-OData Service Layer
-↓
-Workflow Orchestration Engine
-↓
-Risk Intelligence Engine
-↓
-AI Copilot Layer
-↓
-Persistence Layer
+Classify each file as:
 
-==================================================
-PHASE 2
-ODATA SERVICE LAYER
-===================
+ACTIVE
+LIKELY_ACTIVE
+SUSPICIOUS
+DEAD
+UNKNOWN
 
-Create SAP-style endpoints.
+Include:
 
-Current:
-
-/api/workflows
-/api/users
-/api/analytics
-
-Add:
-
-/odata/Workflows
-/odata/Approvals
-/odata/Users
-/odata/Departments
-/odata/RiskAnalysis
-/odata/SystemHealth
-
-Implement:
-
-* $filter
-* $top
-* $skip
-* $orderby
-
-where feasible.
-
-Maintain compatibility with existing APIs.
-
-Do not break existing frontend.
+* path
+* purpose
+* references
+* import count
+* export count
 
 ==================================================
-PHASE 3
-CDS-INSPIRED ANALYTICS LAYER
-============================
+PHASE 2 — DEPENDENCY GRAPH
+==========================
 
-Create CDS-style view models.
+Build complete dependency graph.
 
-Examples:
+Frontend:
 
-Z_WORKFLOW_ANALYTICS
-Z_APPROVAL_QUEUE
-Z_RISK_MONITORING
-Z_USER_WORKLOAD
-Z_SLA_PERFORMANCE
-Z_AI_DIAGNOSTICS
+* React
+* TypeScript
+* Hooks
+* Components
+* Services
 
-Implement via:
+Backend:
 
-SQLAlchemy
-Pydantic
-Database Views
+* FastAPI
+* SQLAlchemy
+* Engines
+* APIs
 
-Expose through OData endpoints.
+SAP:
 
-==================================================
-PHASE 4
-SAP DOMAIN MODELING
-===================
+* CAP
+* CDS
+* OData
+* OpenUI5
 
-Refactor naming conventions.
+Generate:
 
-Introduce SAP-style business entities:
-
-WorkflowHeader
-WorkflowItem
-ApprovalQueue
-BusinessPartner
-Department
-CostCenter
-RiskAssessment
-SLAProfile
-
-Map existing models.
-
-Do not destroy current functionality.
+DEPENDENCY_GRAPH.md
 
 ==================================================
-PHASE 5
-OPENUI5 MICRO-FRONTEND
-======================
+PHASE 3 — ORPHAN DETECTION
+==========================
 
-DO NOT convert entire platform.
+Identify:
 
-Convert ONLY ONE module.
+Files imported nowhere.
 
-Preferred order:
+Components rendered nowhere.
 
-1. Approval Center
-2. User Management
-3. System Health
+Routes navigated nowhere.
 
-Build module using:
+Hooks consumed nowhere.
+
+Services called nowhere.
+
+Models instantiated nowhere.
+
+CSS loaded nowhere.
+
+Assets referenced nowhere.
+
+Generate:
+
+ORPHAN_REPORT.md
+
+DO NOT DELETE YET.
+
+==================================================
+PHASE 4 — DUPLICATE IMPLEMENTATION DETECTION
+============================================
+
+Search for:
+
+Duplicate:
+
+* types
+* interfaces
+* APIs
+* stores
+* hooks
+* workflow models
+* approval models
+* analytics models
+
+Generate:
+
+DUPLICATE_REPORT.md
+
+Recommend canonical implementation.
+
+==================================================
+PHASE 5 — SAP AUTHENTICITY AUDIT
+================================
+
+Locate:
+
+Legacy SAP mocks.
+
+Legacy fake OData.
+
+Legacy SAP-themed placeholders.
+
+Legacy SAP simulation files.
+
+Determine:
+
+Still needed
+Replaceable
+Safe to remove
+
+Generate:
+
+SAP_CLEANUP_REPORT.md
+
+==================================================
+PHASE 6 — SAFE REMOVAL PLAN
+===========================
+
+Before deleting anything:
+
+Produce:
+
+SAFE_REMOVAL_PLAN.md
+
+For each candidate:
+
+File
+Reason
+Dependencies
+Risk Level
+
+Risk Levels:
+
+LOW
+MEDIUM
+HIGH
+CRITICAL
+
+Only LOW files may be automatically removed.
+
+==================================================
+PHASE 7 — AUTOMATED LOW-RISK CLEANUP
+====================================
+
+Remove ONLY:
+
+* unused imports
+* unused exports
+* unreachable utilities
+* abandoned CSS
+* unused assets
+* duplicate reports
+
+DO NOT touch:
+
+WorkflowEngine
+
+RiskEngine
+
+NotificationEngine
+
+AIEngine
+
+CAP
+
+CDS
+
+OData
 
 OpenUI5
 
-Integrate with:
+Authentication
 
-existing OData endpoints.
-
-Demonstrate:
-
-* UI5 controls
-* tables
-* filters
-* forms
-* data binding
+Shared persistence
 
 ==================================================
-PHASE 6
-FIORI DESIGN ALIGNMENT
-======================
+PHASE 8 — VALIDATION LOOP
+=========================
 
-Audit current UI.
+After EVERY deletion:
 
-Map screens to Fiori concepts.
+Run:
 
-Dashboard:
-Overview Page
+npm run build
 
-Approval Center:
-Worklist
+TypeScript check
 
-User Management:
-Object Management
+Lint
 
-Workflow Intelligence:
-Analytical List Page
+FastAPI startup
 
-Settings:
-Administrative Configuration
+CAP startup
 
-Document alignment.
+OpenUI5 startup
+
+If any failure occurs:
+
+Restore deleted artifact.
+
+Reclassify.
+
+Retry.
 
 ==================================================
-PHASE 7
-SAP BTP READINESS
-=================
-
-Create:
-
-btp/
+PHASE 9 — FINAL CERTIFICATION
+=============================
 
 Generate:
 
-* mta.yaml
-* deployment documentation
-* destination configuration examples
-* xs-security samples
+CLEANUP_CERTIFICATION.md
 
-Do not require paid SAP systems.
+Include:
 
-Goal:
+Files removed
 
-Show BTP deployment readiness.
+Files retained
 
-==================================================
-PHASE 8
-SAP WORKFLOW POSITIONING
-========================
+Risk items remaining
 
-Map orchestration engine to:
+Storage saved
 
-SAP Build Process Automation concepts.
+Dependency improvements
 
-Document:
-
-Workflow
-Approval
-Escalation
-Exception Handling
-Risk Evaluation
-
-==================================================
-PHASE 9
-RECRUITER CREDIBILITY AUDIT
-===========================
-
-Review entire project as:
-
-SAP Recruiter
-SAP Architect
-SAP Hiring Manager
-
-Answer:
-
-1. Where is SAP visible?
-2. Which SAP concepts are demonstrated?
-3. Which SAP technologies are demonstrated?
-4. Which SAP technologies are simulated?
-5. What still looks generic?
-
-Generate gap report.
-
-==================================================
-PHASE 10
-PROGRESS TRACKER
-================
-
-Create:
-
-SAPIFICATION_PROGRESS.md
-
-Track:
-
-SAP Architecture ............ %
-OData Layer ................. %
-CDS Layer ................... %
-OpenUI5 Integration ......... %
-Fiori Alignment ............. %
-BTP Readiness ............... %
-Workflow Mapping ............ %
-Recruiter Credibility ....... %
-
-Calculate:
-
-Overall SAP-ification Score
+Technical debt reduction
 
 ==================================================
 SUCCESS CRITERIA
 ================
 
-The project must evolve from:
+Project must:
 
-"React + FastAPI AI Dashboard"
+Compile successfully
 
-to
+Run successfully
 
-"SAP Cognitive Workflow Orchestra"
+Pass validation
 
-with visible evidence of:
+Retain all functionality
 
-* SAP UI5
-* Fiori Concepts
-* OData Services
-* CDS-Based Analytics
-* SAP Workflow Thinking
-* SAP BTP Readiness
+Reduce technical debt
 
-WITHOUT rebuilding the system from scratch.
+Provide evidence for every deletion
 
-At the end provide:
+No assumptions.
 
-1. Before vs After comparison
-2. SAP-ification score
-3. Recruiter impact score
-4. Resume impact score
-5. Remaining gaps preventing true enterprise SAP readiness
+No speculative deletions.
+
+No bulk removal.
+
+Every deletion must be justified and validated.
+
+
+Do not let Antigravity auto-delete anything classified as MEDIUM, HIGH, or CRITICAL risk. Require it to generate reports first. In projects that have undergone multiple AI-driven refactors, the most dangerous files are often the ones that appear unused but are loaded dynamically, imported indirectly, or required by runtime configuration.

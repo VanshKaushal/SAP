@@ -1,0 +1,44 @@
+<mvc:View
+    controllerName="ui5.user.management.controller.App"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns="sap.m"
+    xmlns:f="sap.f">
+    <f:DynamicPage id="dynamicPageId" headerExpanded="true" toggleHeaderOnTitleClick="true">
+        <f:title>
+            <f:DynamicPageTitle>
+                <f:heading>
+                    <Title text="User Management"/>
+                </f:heading>
+            </f:DynamicPageTitle>
+        </f:title>
+        <f:content>
+            <Table id="usersTable"
+                items="{
+                    path: '/Users',
+                    parameters: {
+                        $expand: 'department'
+                    }
+                }"
+                class="sapFDynamicPageAlignContent"
+                width="auto">
+                <columns>
+                    <Column><Text text="Email"/></Column>
+                    <Column><Text text="Role"/></Column>
+                    <Column><Text text="Department"/></Column>
+                    <Column><Text text="Approval Authority"/></Column>
+                </columns>
+                <items>
+                    <ColumnListItem>
+                        <cells>
+                            <ObjectIdentifier title="{email}" text="{id}"/>
+                            <Text text="{role}"/>
+                            <Text text="{department/name}"/>
+                            <Text text="{approvalAuthority}"/>
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </f:content>
+    </f:DynamicPage>
+</mvc:View>

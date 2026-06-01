@@ -1,0 +1,11 @@
+{
+  "name": "ui5-user-management",
+  "version": "1.0.0",
+  "description": "OpenUI5 User Management",
+  "scripts": {
+    "start": "ui5 serve -o index.html"
+  },
+  "dependencies": {
+    "@ui5/cli": "^3.0.0"
+  }
+}
