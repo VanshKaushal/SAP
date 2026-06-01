@@ -7,8 +7,6 @@ import {
   CartesianGrid, 
   Tooltip, 
   ResponsiveContainer,
-  PieChart,
-  Pie,
   Cell,
 } from 'recharts';
 import { 
@@ -22,29 +20,17 @@ import {
 import { useWorkflowStore } from '../hooks/useWorkflowStore';
 import './Analytics.css';
 
-const COLORS = ['var(--accent-teal)', 'var(--accent-blue)', '#ff453a'];
-
 const Analytics: React.FC = () => {
   const { workflows, analytics } = useWorkflowStore();
 
   const deptData = useMemo(() => {
     const counts: Record<string, number> = {};
-    workflows.forEach(wf => {
-      counts[wf.department] = (counts[wf.department] || 0) + 1;
+    (workflows || []).forEach(wf => {
+      if (wf?.department) {
+        counts[wf.department] = (counts[wf.department] || 0) + 1;
+      }
     });
     return Object.entries(counts).map(([name, value]) => ({ name, value }));
-  }, [workflows]);
-
-  const slaDist = useMemo(() => {
-    const compliant = workflows.filter(w => w.status !== 'SLA_RISK' && w.status !== 'DELAYED').length;
-    const atRisk = workflows.filter(w => w.status === 'SLA_RISK').length;
-    const delayed = workflows.filter(w => w.status === 'DELAYED').length;
-    
-    return [
-      { name: 'Compliant', value: compliant },
-      { name: 'At Risk', value: atRisk },
-      { name: 'Delayed', value: delayed },
-    ];
   }, [workflows]);
 
   return (
@@ -67,8 +53,8 @@ const Analytics: React.FC = () => {
           </div>
         </div>
         <div className="header-actions">
-          <button className="btn-secondary glass">EXPORT AUDIT</button>
-          <button className="btn-primary accent-glow">SCHEDULE REPORT</button>
+          <button className="btn-secondary glass" disabled style={{ opacity: 0.5, cursor: 'not-allowed' }}>EXPORT AUDIT</button>
+          <button className="btn-primary accent-glow" disabled style={{ opacity: 0.5, cursor: 'not-allowed' }}>SCHEDULE REPORT</button>
         </div>
       </header>
 
@@ -77,32 +63,32 @@ const Analytics: React.FC = () => {
           <div className="stat-icon teal"><Activity size={20} /></div>
           <div className="stat-info">
             <span className="stat-label">System Efficiency</span>
-            <span className="stat-value">{analytics.throughput.toFixed(1)}%</span>
-            <span className="stat-trend up">+2.4% vs last month</span>
+            <span className="stat-value">{(analytics?.throughput ?? 0).toFixed(1)}%</span>
+            <span className={`stat-trend ${((analytics?.trend_efficiency ?? 0) >= 0) ? 'up' : 'down'}`}>{((analytics?.trend_efficiency ?? 0) >= 0) ? '+' : ''}{(analytics?.trend_efficiency ?? 0).toFixed(1)}% vs last month</span>
           </div>
         </div>
         <div className="stat-card glass-card">
           <div className="stat-icon blue"><Clock size={20} /></div>
           <div className="stat-info">
             <span className="stat-label">Avg. Bottleneck Score</span>
-            <span className="stat-value">{analytics.bottleneck_score.toFixed(1)}</span>
-            <span className="stat-trend down">-15% improvement</span>
+            <span className="stat-value">{(analytics?.bottleneck_score ?? 0).toFixed(1)}</span>
+            <span className={`stat-trend ${((analytics?.trend_bottleneck ?? 0) >= 0) ? 'up' : 'down'}`}>{((analytics?.trend_bottleneck ?? 0) >= 0) ? '+' : ''}{(analytics?.trend_bottleneck ?? 0).toFixed(1)}% improvement</span>
           </div>
         </div>
         <div className="stat-card glass-card">
           <div className="stat-icon purple"><ShieldCheck size={20} /></div>
           <div className="stat-info">
             <span className="stat-label">Compliance Index</span>
-            <span className="stat-value">{analytics.sla_compliance.toFixed(1)}%</span>
-            <span className="stat-trend up">+0.8% accuracy</span>
+            <span className="stat-value">{(analytics?.sla_compliance ?? 0).toFixed(1)}%</span>
+            <span className={`stat-trend ${((analytics?.trend_compliance ?? 0) >= 0) ? 'up' : 'down'}`}>{((analytics?.trend_compliance ?? 0) >= 0) ? '+' : ''}{(analytics?.trend_compliance ?? 0).toFixed(1)}% accuracy</span>
           </div>
         </div>
         <div className="stat-card glass-card">
           <div className="stat-icon blue"><Target size={20} /></div>
           <div className="stat-info">
             <span className="stat-label">Total Processed</span>
-            <span className="stat-value">{analytics.total_processed}</span>
-            <span className="stat-trend up">+5% growth</span>
+            <span className="stat-value">{analytics?.total_processed ?? 0}</span>
+            <span className={`stat-trend ${((analytics?.trend_processed ?? 0) >= 0) ? 'up' : 'down'}`}>{((analytics?.trend_processed ?? 0) >= 0) ? '+' : ''}{(analytics?.trend_processed ?? 0).toFixed(1)}% growth</span>
           </div>
         </div>
       </div>
@@ -124,7 +110,7 @@ const Analytics: React.FC = () => {
                   contentStyle={{ backgroundColor: '#0a0a0a', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: '#fff' }}
                 />
                 <Bar dataKey="value" fill="var(--accent-blue)" radius={[4, 4, 0, 0]} barSize={40}>
-                  {deptData.map((entry, index) => (
+                  {deptData.map((_, index) => (
                     <Cell key={`cell-${index}`} fill={`url(#barGradient-${index})`} />
                   ))}
                 </Bar>
@@ -169,7 +155,7 @@ const Analytics: React.FC = () => {
               </div>
             </div>
           </div>
-          <button className="btn-primary full-width mt-4">EXECUTE ALL OPTIMIZATIONS</button>
+          <button className="btn-primary full-width mt-4" disabled style={{ opacity: 0.5, cursor: 'not-allowed' }}>EXECUTE ALL OPTIMIZATIONS</button>
         </div>
       </div>
 

@@ -6,6 +6,7 @@ router = APIRouter()
 
 start_time = time.time()
 
+
 @router.get("/")
 def get_system_health():
     return {

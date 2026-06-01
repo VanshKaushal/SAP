@@ -3,13 +3,16 @@ from datetime import datetime
 from typing import List, Optional
 from backend.models.workflow import WorkflowStatus, PriorityLevel
 
+
 class TaskBase(BaseModel):
     reviewer: str
     completion_status: str
 
+
 class TaskCreate(TaskBase):
     task_id: str
     workflow_id: str
+
 
 class Task(TaskBase):
     task_id: str
@@ -17,6 +20,7 @@ class Task(TaskBase):
 
     class Config:
         from_attributes = True
+
 
 class WorkflowBase(BaseModel):
     title: str
@@ -27,8 +31,10 @@ class WorkflowBase(BaseModel):
     sla_deadline: datetime
     description: str
 
+
 class WorkflowCreate(WorkflowBase):
     id: str
+
 
 class Workflow(WorkflowBase):
     id: str
@@ -39,6 +45,7 @@ class Workflow(WorkflowBase):
 
     class Config:
         from_attributes = True
+
 
 class Notification(BaseModel):
     id: str
@@ -51,6 +58,7 @@ class Notification(BaseModel):
 
     class Config:
         from_attributes = True
+
 
 class Analytics(BaseModel):
     throughput: float

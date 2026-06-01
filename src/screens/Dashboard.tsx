@@ -6,10 +6,7 @@ import {
   Clock, 
   Zap,
   ArrowUpRight,
-  ArrowDownRight,
-  ShieldAlert,
-  Brain,
-  Activity
+  ArrowDownRight
 } from 'lucide-react';
 import SystemHealthBar from '../components/SystemHealthBar';
 
@@ -25,7 +22,15 @@ import {
 import { useWorkflowStore } from '../hooks/useWorkflowStore';
 import './Dashboard.css';
 
-const KPICard = ({ title, value, trend, icon: Icon, color }: any) => (
+interface KPICardProps {
+  title: string;
+  value: string | number;
+  trend: number;
+  icon: React.ElementType;
+  color: string;
+}
+
+const KPICard = ({ title, value, trend, icon: Icon, color }: KPICardProps) => (
   <motion.div 
     className="kpi-card glass-card glow-border"
     whileHover={{ y: -5 }}
@@ -36,8 +41,8 @@ const KPICard = ({ title, value, trend, icon: Icon, color }: any) => (
         <Icon size={20} />
       </div>
       <div className="kpi-trend">
-        {trend > 0 ? <ArrowUpRight size={14} className="text-success" /> : <ArrowDownRight size={14} className="text-danger" />}
-        <span className={trend > 0 ? 'text-success' : 'text-danger'}>{Math.abs(trend).toFixed(1)}%</span>
+        {(trend ?? 0) > 0 ? <ArrowUpRight size={14} className="text-success" /> : <ArrowDownRight size={14} className="text-danger" />}
+        <span className={(trend ?? 0) > 0 ? 'text-success' : 'text-danger'}>{Math.abs(trend ?? 0).toFixed(1)}%</span>
       </div>
     </div>
     <div className="kpi-body">
@@ -65,25 +70,27 @@ const KPICard = ({ title, value, trend, icon: Icon, color }: any) => (
   </motion.div>
 );
 
-);
+
+
 
 const Dashboard: React.FC = () => {
   const { workflows, analytics, notifications } = useWorkflowStore();
 
   const chartData = useMemo(() => {
+    const throughput = analytics?.throughput ?? 0;
     return [
-      { name: '00:00', value: 400 + (analytics.throughput * 2) },
-      { name: '04:00', value: 300 + (analytics.throughput * 1.5) },
-      { name: '08:00', value: 600 + (analytics.throughput * 3) },
-      { name: '12:00', value: 800 + (analytics.throughput * 4) },
-      { name: '16:00', value: 500 + (analytics.throughput * 2.5) },
-      { name: '20:00', value: 900 + (analytics.throughput * 4.5) },
-      { name: '23:59', value: 1100 + (analytics.throughput * 5) },
+      { name: '00:00', value: 400 + (throughput * 2) },
+      { name: '04:00', value: 300 + (throughput * 1.5) },
+      { name: '08:00', value: 600 + (throughput * 3) },
+      { name: '12:00', value: 800 + (throughput * 4) },
+      { name: '16:00', value: 500 + (throughput * 2.5) },
+      { name: '20:00', value: 900 + (throughput * 4.5) },
+      { name: '23:59', value: 1100 + (throughput * 5) },
     ];
-  }, [analytics.throughput]);
+  }, [analytics?.throughput]);
 
-  const delayedWorkflows = workflows.filter(w => w.status === 'DELAYED' || w.status === 'SLA_RISK').length;
-  const riskAlerts = workflows.filter(w => w.priority === 'CRITICAL' || w.status === 'ESCALATED').length;
+  const safeWorkflows = workflows ?? [];
+  const delayedWorkflows = safeWorkflows.filter(w => w?.status === 'DELAYED' || w?.status === 'SLA_RISK').length;
 
   return (
     <div className="dashboard-container">
@@ -98,23 +105,25 @@ const Dashboard: React.FC = () => {
             <p>Global AI-Native Workflow Orchestration & Neural Intelligence Intelligence</p>
           </div>
           <div className="header-actions">
-            <button className="btn-secondary glass">EXPORT AUDIT</button>
-            <button className="btn-primary accent-glow">INITIATE OPTIMIZATION</button>
+            <button className="btn-secondary glass" disabled style={{ opacity: 0.5, cursor: 'not-allowed' }}>EXPORT AUDIT</button>
+            <button className="btn-primary accent-glow" disabled style={{ opacity: 0.5, cursor: 'not-allowed' }}>INITIATE OPTIMIZATION</button>
           </div>
         </motion.div>
         
-        <SystemHealthBar 
-          health={analytics.system_health} 
-          confidence={analytics.ai_confidence}
-          velocity={analytics.approval_velocity}
-        />
+        {analytics && (
+          <SystemHealthBar 
+            health={analytics?.system_health ?? 0} 
+            confidence={analytics?.ai_confidence ?? 0}
+            velocity={analytics?.approval_velocity ?? 0}
+          />
+        )}
       </header>
 
       <div className="kpi-grid">
-        <KPICard title="Active Workflows" value={workflows.length} trend={12} icon={Zap} color="blue" />
-        <KPICard title="Delayed Approvals" value={delayedWorkflows} trend={-5} icon={Clock} color="purple" />
-        <KPICard title="SLA Compliance" value={`${analytics.sla_compliance.toFixed(1)}%`} trend={2} icon={TrendingUp} color="teal" />
-        <KPICard title="Risk Index" value={analytics.risk_index.toFixed(0)} trend={15} icon={AlertCircle} color="red" />
+        <KPICard title="Active Workflows" value={safeWorkflows.length} trend={analytics?.trend_active ?? 0} icon={Zap} color="blue" />
+        <KPICard title="Delayed Approvals" value={delayedWorkflows} trend={analytics?.trend_delayed ?? 0} icon={Clock} color="purple" />
+        <KPICard title="SLA Compliance" value={`${(analytics?.sla_compliance ?? 0).toFixed(1)}%`} trend={analytics?.trend_sla ?? 0} icon={TrendingUp} color="teal" />
+        <KPICard title="Risk Index" value={(analytics?.risk_index ?? 0).toFixed(0)} trend={analytics?.trend_risk ?? 0} icon={AlertCircle} color="red" />
       </div>
 
       <div className="dashboard-main-grid">
@@ -152,10 +161,10 @@ const Dashboard: React.FC = () => {
           </div>
           <div className="stream-items">
             <AnimatePresence initial={false}>
-              {notifications.slice(0, 8).map((notification) => (
+              {(notifications ?? []).slice(0, 8).map((notification) => (
                 <motion.div 
-                  key={notification.id} 
-                  className={`stream-item ${notification.severity.toLowerCase()}`}
+                  key={notification?.id} 
+                  className={`stream-item ${notification?.severity?.toLowerCase() ?? 'info'}`}
                   initial={{ opacity: 0, x: -20, height: 0 }}
                   animate={{ opacity: 1, x: 0, height: 'auto' }}
                   exit={{ opacity: 0, x: 20 }}
@@ -163,9 +172,14 @@ const Dashboard: React.FC = () => {
                 >
                   <div className="stream-marker" />
                   <div className="stream-content">
-                    <span className="stream-time">{new Date(notification.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}</span>
-                    <p><strong>{notification.title}</strong></p>
-                    <p className="stream-msg">{notification.message}</p>
+                    <span className="stream-time">
+                      {notification?.timestamp 
+                        ? new Date(notification.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })
+                        : 'N/A'
+                      }
+                    </span>
+                    <p><strong>{notification?.title}</strong></p>
+                    <p className="stream-msg">{notification?.message}</p>
                   </div>
                 </motion.div>
               ))}
@@ -183,7 +197,7 @@ const Dashboard: React.FC = () => {
               <div className="insight-icon">💡</div>
               <div className="insight-text">
                 <strong>Optimization Opportunity</strong>
-                <p>Bottleneck detected in {workflows[0]?.department || 'Procurement'}. Redirecting approvals to Agent-Beta could reduce SLA latency by 14%.</p>
+                <p>Bottleneck detected in {safeWorkflows[0]?.department || 'Procurement'}. Redirecting approvals to Agent-Beta could reduce SLA latency by 14%.</p>
                 <button className="insight-action">APPLY OPTIMIZATION</button>
               </div>
             </div>

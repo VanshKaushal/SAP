@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { BrainCircuit, Cpu, ShieldCheck, Activity } from 'lucide-react';
 import './IntroLoader.css';
 
@@ -26,7 +26,7 @@ const IntroLoader: React.FC<IntroLoaderProps> = ({ onComplete }) => {
     };
 
     runSequence();
-  }, []);
+  }, [onComplete, steps.length]);
 
   return (
     <div className="intro-loader">

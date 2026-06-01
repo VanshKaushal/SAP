@@ -11,28 +11,27 @@ import {
   BrainCircuit
 } from 'lucide-react';
 import { useWorkflowStore } from '../hooks/useWorkflowStore';
+import { apiService } from '../services/ApiService';
+import type { Message } from '../types/ai';
 import './AICopilot.css';
-
-interface Message {
-  id: string;
-  role: 'user' | 'assistant';
-  content: string;
-  status?: 'typing' | 'done';
-}
 
 const AICopilot: React.FC = () => {
   const { workflows, analytics } = useWorkflowStore();
   const [input, setInput] = useState('');
   
   const initialMessage = useMemo(() => {
-    const riskWorkflows = workflows.filter(w => w.status === 'SLA_RISK' || w.status === 'ESCALATED');
+    const safeWorkflows = workflows ?? [];
+    const riskWorkflows = safeWorkflows.filter(w => w?.status === 'SLA_RISK' || w?.status === 'ESCALATED');
+    const throughput = analytics?.throughput ?? 0;
+    const firstRiskDept = riskWorkflows[0]?.department || 'Procurement';
+    
     return { 
       id: '1', 
       role: 'assistant', 
-      content: `Hello. I've analyzed the current SAP orchestration layer. We're seeing ${riskWorkflows.length} workflows at critical risk. System efficiency is currently at ${analytics.throughput.toFixed(1)}%. Would you like me to prioritize the ${riskWorkflows[0]?.department || 'Procurement'} escalations?`,
+      content: `Hello. I've analyzed the current SAP orchestration layer. We're seeing ${riskWorkflows.length} workflows at critical risk. System efficiency is currently at ${throughput.toFixed(1)}%. Would you like me to prioritize the ${firstRiskDept} escalations?`,
       status: 'done'
-    };
-  }, []);
+    } as Message;
+  }, [workflows, analytics]);
 
   const [messages, setMessages] = useState<Message[]>([initialMessage]);
   const [isTyping, setIsTyping] = useState(false);
@@ -53,7 +52,8 @@ const AICopilot: React.FC = () => {
     setIsTyping(true);
 
     try {
-      const context = `Workflows: ${JSON.stringify(workflows.slice(0, 5))}. Analytics: ${JSON.stringify(analytics)}`;
+      const safeWorkflows = workflows ?? [];
+      const context = `Workflows: ${JSON.stringify(safeWorkflows.slice(0, 5))}. Analytics: ${JSON.stringify(analytics ?? {})}`;
       const response = await apiService.queryCopilot(input, context);
 
       setIsTyping(false);
@@ -90,7 +90,7 @@ const AICopilot: React.FC = () => {
   };
 
 
-  const activeWorkflows = workflows.slice(0, 3);
+  const activeWorkflows = (workflows ?? []).slice(0, 3);
 
   return (
     <div className="ai-copilot-container">
@@ -107,16 +107,16 @@ const AICopilot: React.FC = () => {
               </div>
             </div>
             <div className="chat-actions">
-              <button className="chat-action-btn"><RefreshCw size={16} /></button>
-              <button className="chat-action-btn"><Terminal size={16} /></button>
+              <button className="chat-action-btn" disabled style={{ opacity: 0.5, cursor: 'not-allowed' }}><RefreshCw size={16} /></button>
+              <button className="chat-action-btn" disabled style={{ opacity: 0.5, cursor: 'not-allowed' }}><Terminal size={16} /></button>
             </div>
           </header>
 
           <div className="messages-container">
             <AnimatePresence initial={false}>
-              {messages.map((msg) => (
+              {(messages ?? []).map((msg) => (
                 <motion.div
-                  key={msg.id}
+                  key={msg?.id} 
                   initial={{ opacity: 0, y: 10, scale: 0.98 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   className={`message-wrapper ${msg.role}`}
@@ -137,8 +137,8 @@ const AICopilot: React.FC = () => {
                           </button>
                         </div>
                         <div className="confidence-meter">
-                          <div className="confidence-fill" style={{ '--width': '94%' } as any}></div>
-                          <span>94% CONFIDENCE</span>
+                          <div className="confidence-fill" style={{ '--width': `${(analytics?.ai_confidence ?? 0).toFixed(0)}%` } as React.CSSProperties}></div>
+                          <span>{(analytics?.ai_confidence ?? 0).toFixed(0)}% CONFIDENCE</span>
                         </div>
                       </div>
                     )}
@@ -182,10 +182,10 @@ const AICopilot: React.FC = () => {
         <div className="context-sidebar">
           <div className="context-card glass-card">
             <h4>Active Context</h4>
-            {activeWorkflows.map(wf => (
-              <div key={wf.id} className="context-item">
-                <Zap size={14} className={wf.status === 'SLA_RISK' ? 'text-danger' : 'text-accent-blue'} />
-                <span>{wf.id} - {wf.status}</span>
+            {(activeWorkflows ?? []).map(wf => (
+              <div key={wf?.id} className="context-item">
+                <Zap size={14} className={wf?.status === 'SLA_RISK' ? 'text-danger' : 'text-accent-blue'} />
+                <span>{wf?.id} - {wf?.status}</span>
               </div>
             ))}
             <div className="context-item">
@@ -197,9 +197,9 @@ const AICopilot: React.FC = () => {
           <div className="context-card glass-card">
             <h4>Recommended Actions</h4>
             <div className="action-list">
-              <button className="context-action">Apply Re-routing</button>
-              <button className="context-action">Export Analysis</button>
-              <button className="context-action secondary">Silence Alerts</button>
+              <button className="context-action" disabled style={{ opacity: 0.5, cursor: 'not-allowed' }}>Apply Re-routing</button>
+              <button className="context-action" disabled style={{ opacity: 0.5, cursor: 'not-allowed' }}>Export Analysis</button>
+              <button className="context-action secondary" disabled style={{ opacity: 0.5, cursor: 'not-allowed' }}>Silence Alerts</button>
             </div>
           </div>
         </div>

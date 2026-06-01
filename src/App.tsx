@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import Layout from './components/Layout';
 import Dashboard from './screens/Dashboard';
 import WorkflowGraph from './screens/WorkflowGraph';
@@ -8,22 +9,15 @@ import ApprovalCenter from './screens/ApprovalCenter';
 import Settings from './screens/Settings';
 import Landing from './screens/Landing';
 import IntroLoader from './components/IntroLoader';
+
 import './App.css';
 
-export type Screen = 'dashboard' | 'workflow-graph' | 'ai-copilot' | 'analytics' | 'approval-center' | 'risk-monitoring' | 'system-health' | 'settings';
+import type { Screen } from './types/navigation';
 
 function App() {
   const [currentScreen, setCurrentScreen] = useState<Screen>('dashboard');
   const [isLoading, setIsLoading] = useState(true);
   const [hasEntered, setHasEntered] = useState(false);
-
-  if (isLoading) {
-    return <IntroLoader onComplete={() => setIsLoading(false)} />;
-  }
-
-  if (!hasEntered) {
-    return <Landing onStart={() => setHasEntered(true)} />;
-  }
 
   const renderScreen = () => {
     switch (currentScreen) {
@@ -45,9 +39,23 @@ function App() {
   };
 
   return (
-    <Layout currentScreen={currentScreen} onNavigate={setCurrentScreen}>
-      {renderScreen()}
-    </Layout>
+    <AnimatePresence mode="wait">
+      {isLoading ? (
+        <motion.div key="loader" exit={{ opacity: 0 }}>
+          <IntroLoader onComplete={() => setIsLoading(false)} />
+        </motion.div>
+      ) : !hasEntered ? (
+        <motion.div key="landing" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+          <Landing onStart={() => setHasEntered(true)} />
+        </motion.div>
+      ) : (
+        <motion.div key="platform" initial={{ opacity: 0 }} animate={{ opacity: 1 }} style={{ height: '100%', width: '100%' }}>
+          <Layout currentScreen={currentScreen} onNavigate={setCurrentScreen}>
+            {renderScreen()}
+          </Layout>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }
 

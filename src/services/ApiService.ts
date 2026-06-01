@@ -1,4 +1,6 @@
-import { Workflow, Analytics, Notification, Task } from '../types/workflow';
+import type { Workflow } from '../types/workflow';
+import type { Analytics } from '../types/analytics';
+import type { Notification } from '../types/notification';
 
 const API_BASE_URL = 'http://localhost:8000/api';
 
@@ -27,7 +29,7 @@ class ApiService {
     await fetch(`${API_BASE_URL}/workflows/${id}/escalate`, { method: 'POST' });
   }
 
-  async getGraphData(): Promise<any> {
+  async getGraphData(): Promise<unknown> {
     const response = await fetch(`${API_BASE_URL}/graph/`);
     return response.json();
   }

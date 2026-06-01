@@ -9,7 +9,11 @@ interface SystemHealthBarProps {
   velocity: number;
 }
 
-const SystemHealthBar: React.FC<SystemHealthBarProps> = ({ health, confidence, velocity }) => {
+const SystemHealthBar: React.FC<SystemHealthBarProps> = ({ 
+  health = 0, 
+  confidence = 0, 
+  velocity = 0 
+}) => {
   return (
     <div className="system-health-bar glass">
       <div className="health-item">
@@ -24,11 +28,13 @@ const SystemHealthBar: React.FC<SystemHealthBarProps> = ({ health, confidence, v
       <div className="health-item">
         <Cpu size={14} className="text-accent-blue" />
         <span className="label">ENGINE HEALTH:</span>
-        <span className="value">{health.toFixed(1)}%</span>
+        <span className="value">
+          {typeof health === 'number' ? health.toFixed(1) : '0.0'}%
+        </span>
         <div className="mini-progress">
           <motion.div 
             className="progress-fill" 
-            animate={{ width: `${health}%` }}
+            animate={{ width: `${typeof health === 'number' ? health : 0}%` }}
             transition={{ duration: 1 }}
           />
         </div>
@@ -39,7 +45,9 @@ const SystemHealthBar: React.FC<SystemHealthBarProps> = ({ health, confidence, v
       <div className="health-item">
         <ShieldCheck size={14} className="text-accent-purple" />
         <span className="label">AI CONFIDENCE:</span>
-        <span className="value">{confidence.toFixed(1)}%</span>
+        <span className="value">
+          {typeof confidence === 'number' ? confidence.toFixed(1) : '0.0'}%
+        </span>
       </div>
 
       <div className="divider"></div>
@@ -47,7 +55,9 @@ const SystemHealthBar: React.FC<SystemHealthBarProps> = ({ health, confidence, v
       <div className="health-item">
         <Zap size={14} className="text-accent-cyan" />
         <span className="label">ORCHESTRATION VELOCITY:</span>
-        <span className="value">{velocity.toFixed(2)}x</span>
+        <span className="value">
+          {typeof velocity === 'number' ? velocity.toFixed(2) : '0.00'}x
+        </span>
       </div>
     </div>
   );

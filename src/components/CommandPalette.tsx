@@ -41,7 +41,7 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose, onActi
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
         e.preventDefault();
-        isOpen ? onClose() : null; // This will be handled by the parent
+        if (isOpen) onClose(); // This will be handled by the parent
       }
       if (e.key === 'Escape') onClose();
     };

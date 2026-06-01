@@ -15,9 +15,10 @@ import './ApprovalCenter.css';
 
 const ApprovalCenter: React.FC = () => {
   const { workflows, approveWorkflow, rejectWorkflow } = useWorkflowStore();
+  const safeWorkflows = workflows ?? [];
 
-  const pendingWorkflows = workflows.filter(w => w.status !== 'APPROVED' && w.status !== 'REJECTED');
-  const escalations = workflows.filter(w => w.status === 'ESCALATED').length;
+  const pendingWorkflows = safeWorkflows.filter(w => w?.status !== 'APPROVED' && w?.status !== 'REJECTED');
+  const escalations = safeWorkflows.filter(w => w?.status === 'ESCALATED').length;
 
   return (
     <div className="approval-center-container">
@@ -31,7 +32,7 @@ const ApprovalCenter: React.FC = () => {
             <Filter size={16} />
             <span>SORT: PRIORITY</span>
           </div>
-          <button className="btn-primary accent-glow">BATCH AUTHORIZE</button>
+          <button className="btn-primary accent-glow" disabled style={{ opacity: 0.5, cursor: 'not-allowed' }}>BATCH AUTHORIZE</button>
         </div>
       </header>
 
@@ -46,40 +47,40 @@ const ApprovalCenter: React.FC = () => {
         </div>
         <div className="queue-body">
           <AnimatePresence>
-            {pendingWorkflows.map((item) => (
+            {(pendingWorkflows ?? []).map((item) => (
               <motion.div 
-                key={item.id} 
+                key={item?.id} 
                 className="queue-row"
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, x: -50 }}
                 layout
               >
-                <div className="col id-cell">{item.id}</div>
+                <div className="col id-cell">{item?.id}</div>
                 <div className="col detail-cell">
-                  <span className="item-title">{item.title}</span>
-                  <span className="item-requester">{item.department}</span>
+                  <span className="item-title">{item?.title}</span>
+                  <span className="item-requester">{item?.department}</span>
                 </div>
                 <div className="col priority-cell">
-                  <span className={`priority-tag ${item.priority.toLowerCase()}`}>
-                    {item.priority}
+                  <span className={`priority-tag ${(item?.priority ?? 'MEDIUM').toLowerCase()}`}>
+                    {item?.priority ?? 'MEDIUM'}
                   </span>
                 </div>
                 <div className="col risk-cell">
-                  <div className={`risk-badge ${item.status === 'SLA_RISK' ? 'high' : 'medium'}`}>
+                  <div className={`risk-badge ${item?.status === 'SLA_RISK' ? 'high' : 'medium'}`}>
                     <ShieldAlert size={12} />
-                    {item.status === 'SLA_RISK' ? 'CRITICAL' : 'ELEVATED'}
+                    {item?.status === 'SLA_RISK' ? 'CRITICAL' : 'ELEVATED'}
                   </div>
                 </div>
                 <div className="col sla-cell">
                   <div className="sla-monitor">
-                    <Clock size={12} className={item.status === 'SLA_RISK' ? 'text-danger' : 'text-accent-teal'} />
-                    <span className={item.status === 'SLA_RISK' ? 'text-danger' : ''}>
-                      {item.status === 'SLA_RISK' ? '00:14:22' : '04:22:15'}
+                    <Clock size={12} className={item?.status === 'SLA_RISK' ? 'text-danger' : 'text-accent-teal'} />
+                    <span className={item?.status === 'SLA_RISK' ? 'text-danger' : ''}>
+                      {item?.status === 'SLA_RISK' ? '00:14:22' : '04:22:15'}
                     </span>
                   </div>
                   <div className="sla-bar">
-                    <div className={`sla-fill ${item.status === 'SLA_RISK' ? 'danger' : 'optimal'}`} style={{ width: item.status === 'SLA_RISK' ? '92%' : '45%' }}></div>
+                    <div className={`sla-fill ${item?.status === 'SLA_RISK' ? 'danger' : 'optimal'}`} style={{ width: item?.status === 'SLA_RISK' ? '92%' : '45%' }}></div>
                   </div>
                 </div>
 
@@ -87,19 +88,19 @@ const ApprovalCenter: React.FC = () => {
                   <button 
                     className="action-icon approve" 
                     title="Approve"
-                    onClick={() => approveWorkflow(item.id)}
+                    onClick={() => item?.id && approveWorkflow(item.id)}
                   >
                     <CheckCircle2 size={18} />
                   </button>
                   <button 
                     className="action-icon reject" 
                     title="Reject"
-                    onClick={() => rejectWorkflow(item.id)}
+                    onClick={() => item?.id && rejectWorkflow(item.id)}
                   >
                     <XCircle size={18} />
                   </button>
-                  <button className="action-icon info" title="Details"><ExternalLink size={18} /></button>
-                  <button className="action-icon more"><MoreVertical size={18} /></button>
+                  <button className="action-icon info" title="Details" disabled style={{ opacity: 0.5, cursor: 'not-allowed' }}><ExternalLink size={18} /></button>
+                  <button className="action-icon more" disabled style={{ opacity: 0.5, cursor: 'not-allowed' }}><MoreVertical size={18} /></button>
                 </div>
               </motion.div>
             ))}
@@ -114,7 +115,7 @@ const ApprovalCenter: React.FC = () => {
             <h4>Critical Escalations</h4>
           </div>
           <p>{escalations} workflows have exceeded standard SLA and require immediate executive override.</p>
-          <button className="override-btn">VIEW ESCALATIONS</button>
+          <button className="override-btn" disabled style={{ opacity: 0.5, cursor: 'not-allowed' }}>VIEW ESCALATIONS</button>
         </div>
       </div>
     </div>

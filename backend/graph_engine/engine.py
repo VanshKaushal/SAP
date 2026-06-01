@@ -2,13 +2,14 @@ import networkx as nx
 from typing import List, Dict
 from backend.models.workflow import Workflow, WorkflowStatus
 
+
 class GraphEngine:
     def __init__(self):
         self.graph = nx.DiGraph()
 
     def generate_workflow_topology(self, workflows: List[Workflow]) -> Dict:
         self.graph.clear()
-        
+
         nodes = []
         links = []
 
@@ -25,7 +26,8 @@ class GraphEngine:
 
         for wf in workflows:
             # Workflow Nodes
-            is_critical = wf.status in [WorkflowStatus.ESCALATED, WorkflowStatus.SLA_RISK]
+            is_critical = wf.status in [
+                WorkflowStatus.ESCALATED, WorkflowStatus.SLA_RISK]
             nodes.append({
                 "id": wf.id,
                 "type": "WORKFLOW",
@@ -61,7 +63,8 @@ class GraphEngine:
 
         # Bottleneck detection using Betweenness Centrality
         centrality = nx.betweenness_centrality(self.graph)
-        bottlenecks = [node for node, score in centrality.items() if score > 0.1]
+        bottlenecks = [node for node,
+                       score in centrality.items() if score > 0.1]
 
         return {
             "nodes": nodes,
@@ -76,14 +79,15 @@ class GraphEngine:
 
     def analyze_risk_propagation(self, workflows: List[Workflow]):
         # Calculate how risk in one node affects the whole network
-        critical_nodes = [w.id for w in workflows if w.status in [WorkflowStatus.ESCALATED, WorkflowStatus.SLA_RISK]]
-        
+        critical_nodes = [w.id for w in workflows if w.status in [
+            WorkflowStatus.ESCALATED, WorkflowStatus.SLA_RISK]]
+
         impacted_nodes = set()
         for node in critical_nodes:
             if node in self.graph:
                 # Find all nodes that depend on this critical node (successors in DiGraph)
                 impacted_nodes.update(nx.descendants(self.graph, node))
-        
+
         return {
             "risk_source_count": len(critical_nodes),
             "propagation_impact_count": len(impacted_nodes),

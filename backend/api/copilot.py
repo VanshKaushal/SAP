@@ -3,6 +3,7 @@ from backend.ai_engine.engine import AIEngine
 
 router = APIRouter()
 
+
 @router.post("/query")
 async def copilot_query(
     query: str = Body(..., embed=True),
@@ -11,6 +12,7 @@ async def copilot_query(
     engine = AIEngine()
     response = await engine.generate_copilot_response(context, query)
     return {"response": response}
+
 
 @router.post("/analyze-bottleneck")
 async def analyze_bottleneck(

@@ -34,35 +34,10 @@ export interface Task {
   due_date: string;
 }
 
-export interface User {
-  id: string;
-  name: string;
-  department: string;
-  role: string;
-  approval_authority: number;
-  avatar?: string;
-}
-
-export interface Analytics {
-  throughput: number;
-  sla_compliance: number;
-  bottleneck_score: number;
-  escalation_frequency: number;
-  active_workflows: number;
-  total_processed: number;
-  risk_index: number;
-  system_health: number;
-  ai_confidence: number;
-  approval_velocity: number;
-}
-
-
-export interface Notification {
-  id: string;
-  type: 'ESCALATION' | 'AI_RISK' | 'SLA_BREACH' | 'COMPLETION' | 'REMINDER' | 'ANOMALY';
-  title: string;
-  message: string;
-  timestamp: string;
-  severity: 'INFO' | 'WARNING' | 'CRITICAL';
-  workflow_id?: string;
+// WorkflowRisk contract as requested in m.md
+export interface WorkflowRisk {
+  workflow_id: string;
+  risk_score: number;
+  indicators: string[];
+  last_analyzed: string;
 }

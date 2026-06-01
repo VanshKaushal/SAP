@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { 
   LayoutDashboard, 
   Network, 
@@ -13,7 +14,7 @@ import {
   ChevronRight,
   BrainCircuit
 } from 'lucide-react';
-import { Screen } from '../App';
+import type { Screen } from '../types/navigation';
 import './Sidebar.css';
 
 interface SidebarProps {
@@ -26,14 +27,10 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ collapsed, setCollapsed, activeScreen, onNavigate }) => {
   const menuItems = [
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
-    { id: 'workflow-intelligence', label: 'Workflow Intelligence', icon: BrainCircuit },
     { id: 'workflow-graph', label: 'Workflow Graph', icon: Network },
     { id: 'ai-copilot', label: 'AI Copilot', icon: MessageSquare },
     { id: 'approval-center', label: 'Approval Center', icon: CheckSquare },
     { id: 'analytics', label: 'Analytics', icon: BarChart3 },
-    { id: 'risk-monitoring', label: 'Risk Monitoring', icon: ShieldAlert },
-    { id: 'system-health', label: 'System Health', icon: Activity },
-    { id: 'user-management', label: 'User Management', icon: Users },
     { id: 'settings', label: 'Settings', icon: Settings },
   ];
 
@@ -96,8 +93,5 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, setCollapsed, activeScreen
     </aside>
   );
 };
-
-// We need to import motion from framer-motion here too
-import { motion } from 'framer-motion';
 
 export default Sidebar;

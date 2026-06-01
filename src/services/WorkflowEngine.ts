@@ -1,4 +1,6 @@
-import { Workflow, WorkflowStatus, Analytics, Notification, Task } from '../types/workflow';
+import type { Workflow, WorkflowStatus } from '../types/workflow';
+import type { Analytics } from '../types/analytics';
+import type { Notification } from '../types/notification';
 
 class WorkflowEngine {
   private workflows: Workflow[] = [];
@@ -14,6 +16,14 @@ class WorkflowEngine {
     system_health: 98.4,
     ai_confidence: 94.2,
     approval_velocity: 4.2,
+    trend_active: 12,
+    trend_delayed: -5,
+    trend_sla: 2.4,
+    trend_risk: 15,
+    trend_efficiency: 2.4,
+    trend_bottleneck: -15,
+    trend_compliance: 0.8,
+    trend_processed: 5,
   };
 
   private listeners: Set<() => void> = new Set();
@@ -24,9 +34,6 @@ class WorkflowEngine {
   }
 
   private generateInitialData() {
-    const departments = ['Finance', 'Procurement', 'Legal', 'HR', 'Operations'];
-    const priorities: Workflow['priority'][] = ['LOW', 'MEDIUM', 'HIGH', 'CRITICAL'];
-    const statuses: WorkflowStatus[] = ['PENDING', 'UNDER_REVIEW', 'APPROVED', 'SLA_RISK'];
 
     for (let i = 0; i < 20; i++) {
       this.workflows.push(this.createMockWorkflow(i));
@@ -38,7 +45,6 @@ class WorkflowEngine {
     const departments = ['Finance', 'Procurement', 'Legal', 'HR', 'Operations'];
     const priorities: Workflow['priority'][] = ['LOW', 'MEDIUM', 'HIGH', 'CRITICAL'];
     const statuses: WorkflowStatus[] = ['PENDING', 'UNDER_REVIEW', 'APPROVED', 'SLA_RISK'];
-    
     return {
       id: `WF-${1000 + index}`,
       title: `${departments[index % departments.length]} Approval #${index + 100}`,
@@ -113,12 +119,22 @@ class WorkflowEngine {
     this.analytics.ai_confidence = Math.max(85, Math.min(99, this.analytics.ai_confidence + (Math.random() * 0.2 - 0.1)));
     this.analytics.approval_velocity = Math.max(1, Math.min(10, this.analytics.approval_velocity + (Math.random() * 0.5 - 0.25)));
     this.analytics.active_workflows = this.workflows.length;
+    
+    // Simulate trend updates
+    this.analytics.trend_active += Math.random() * 2 - 1;
+    this.analytics.trend_delayed += Math.random() * 2 - 1;
+    this.analytics.trend_sla += Math.random() * 1 - 0.5;
+    this.analytics.trend_risk += Math.random() * 4 - 2;
+    this.analytics.trend_efficiency += Math.random() * 1 - 0.5;
+    this.analytics.trend_bottleneck += Math.random() * 2 - 1;
+    this.analytics.trend_compliance += Math.random() * 0.5 - 0.25;
+    this.analytics.trend_processed += Math.random() * 1;
   }
 
   private addNotificationForStatusChange(wf: Workflow) {
     const notification: Notification = {
       id: `NT-${Date.now()}`,
-      type: wf.status === 'ESCALATED' ? 'ESCALATION' : wf.status === 'SLA_RISK' ? 'SLA_BREACH' : 'INFO' as any,
+      type: (wf.status === 'ESCALATED' ? 'ESCALATION' : wf.status === 'SLA_RISK' ? 'SLA_BREACH' : 'INFO') as Notification['type'],
       title: `Workflow ${wf.id} Updated`,
       message: `${wf.title} is now ${wf.status}`,
       timestamp: new Date().toISOString(),

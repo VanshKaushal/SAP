@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ShieldAlert, Zap, Clock, Info, AlertTriangle } from 'lucide-react';
-import { Notification } from '../types/workflow';
+import { X, ShieldAlert, Clock, Info, AlertTriangle } from 'lucide-react';
+import type { Notification } from '../types/notification';
 import './NotificationCenter.css';
 
 interface NotificationCenterProps {
@@ -10,7 +10,13 @@ interface NotificationCenterProps {
   onClose: () => void;
 }
 
-const NotificationCenter: React.FC<NotificationCenterProps> = ({ notifications, isOpen, onClose }) => {
+const NotificationCenter: React.FC<NotificationCenterProps> = ({ 
+  notifications = [], 
+  isOpen, 
+  onClose 
+}) => {
+  const safeNotifications = notifications ?? [];
+  
   return (
     <AnimatePresence>
       {isOpen && (
@@ -36,25 +42,25 @@ const NotificationCenter: React.FC<NotificationCenterProps> = ({ notifications, 
 
             <div className="center-stats">
               <div className="stat">
-                <span className="val">{notifications.length}</span>
+                <span className="val">{safeNotifications.length}</span>
                 <span className="lbl">Total Alerts</span>
               </div>
               <div className="stat danger">
-                <span className="val">{notifications.filter(n => n.severity === 'CRITICAL').length}</span>
+                <span className="val">{safeNotifications.filter(n => n?.severity === 'CRITICAL').length}</span>
                 <span className="lbl">Critical</span>
               </div>
             </div>
 
             <div className="notification-list">
-              {notifications.map((notification) => {
-                const Icon = notification.severity === 'CRITICAL' ? ShieldAlert : 
-                             notification.type === 'ANOMALY' ? AlertTriangle :
-                             notification.type === 'SLA_BREACH' ? Clock : Info;
+              {safeNotifications.map((notification) => {
+                const Icon = notification?.severity === 'CRITICAL' ? ShieldAlert : 
+                             notification?.type === 'ANOMALY' ? AlertTriangle :
+                             notification?.type === 'SLA_BREACH' ? Clock : Info;
                 
                 return (
                   <motion.div 
-                    key={notification.id} 
-                    className={`notification-item ${notification.severity.toLowerCase()}`}
+                    key={notification?.id} 
+                    className={`notification-item ${notification?.severity?.toLowerCase() ?? 'info'}`}
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                   >
@@ -63,12 +69,14 @@ const NotificationCenter: React.FC<NotificationCenterProps> = ({ notifications, 
                     </div>
                     <div className="item-content">
                       <div className="item-header">
-                        <span className="item-type">{notification.type}</span>
-                        <span className="item-time">{new Date(notification.timestamp).toLocaleTimeString()}</span>
+                        <span className="item-type">{notification?.type}</span>
+                        <span className="item-time">
+                          {notification?.timestamp ? new Date(notification.timestamp).toLocaleTimeString() : 'N/A'}
+                        </span>
                       </div>
-                      <h4 className="item-title">{notification.title}</h4>
-                      <p className="item-msg">{notification.message}</p>
-                      {notification.workflow_id && (
+                      <h4 className="item-title">{notification?.title}</h4>
+                      <p className="item-msg">{notification?.message}</p>
+                      {notification?.workflow_id && (
                         <button className="item-action">INSPECT {notification.workflow_id}</button>
                       )}
                     </div>

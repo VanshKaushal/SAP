@@ -7,20 +7,21 @@ from backend.ai_engine.engine import AIEngine
 
 router = APIRouter()
 
+
 @router.get("/")
 async def get_risk_analysis(db: Session = Depends(get_db)):
     workflows = db.query(Workflow).all()
     graph_engine = GraphEngine()
-    
+
     # Pre-generate topology for propagation analysis
     graph_engine.generate_workflow_topology(workflows)
     propagation = graph_engine.analyze_risk_propagation(workflows)
-    
+
     # Get AI Insights
     ai_engine = AIEngine()
     risk_summary = f"System has {len(workflows)} active workflows. {propagation['risk_source_count']} are in critical state, impacting {propagation['propagation_impact_count']} downstream processes."
     ai_analysis = await ai_engine.get_completion(f"Provide an executive risk analysis for this enterprise orchestration state: {risk_summary}", "risk_analysis")
-    
+
     return {
         "propagation": propagation,
         "ai_analysis": ai_analysis,

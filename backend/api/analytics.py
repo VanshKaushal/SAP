@@ -6,6 +6,7 @@ from backend.analytics_engine.engine import AnalyticsEngine
 
 router = APIRouter()
 
+
 @router.get("/")
 def get_analytics(db: Session = Depends(get_db)):
     workflows = db.query(WorkflowModel).all()

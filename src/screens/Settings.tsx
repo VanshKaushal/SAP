@@ -1,12 +1,8 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import { 
-  Settings as SettingsIcon, 
+import {
   Cpu, 
   Shield, 
   Network, 
-  Eye, 
-  Zap,
   Lock,
   Globe,
   Database
@@ -46,7 +42,7 @@ const Settings: React.FC = () => {
             <div className="control-group">
               <div className="control-label">
                 <span className="label">Predictive Escalation</span>
-                <span className="desc">Auto-escalate workflows with >60% SLA risk probability.</span>
+                <span className="desc">Auto-escalate workflows with {'>'}60% SLA risk probability.</span>
               </div>
               <div className="toggle-switch active"></div>
             </div>

@@ -1,7 +1,8 @@
 from sqlalchemy.orm import Session
-from backend.models.workflow import Notification, Workflow, WorkflowStatus
+from backend.models.workflow import Notification, Workflow
 from datetime import datetime
 import uuid
+
 
 class NotificationEngine:
     def __init__(self, db: Session):

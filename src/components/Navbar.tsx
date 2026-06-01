@@ -1,5 +1,5 @@
 import React from 'react';
-import { Search, Bell, Globe, Activity, Terminal, ShieldAlert } from 'lucide-react';
+import { Search, Bell, Activity, Terminal, ShieldAlert } from 'lucide-react';
 import { useWorkflowStore } from '../hooks/useWorkflowStore';
 import NotificationCenter from './NotificationCenter';
 import DiagnosticOverlay from './DiagnosticOverlay';
@@ -14,8 +14,8 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
   const [isNotificationsOpen, setIsNotificationsOpen] = React.useState(false);
   const [isDiagOpen, setIsDiagOpen] = React.useState(false);
   
-  const riskCount = workflows.filter(w => w.status === 'SLA_RISK' || w.status === 'ESCALATED').length;
-  const criticalNotifications = notifications.filter(n => n.severity === 'CRITICAL').length;
+  const riskCount = (workflows ?? []).filter(w => w.status === 'SLA_RISK' || w.status === 'ESCALATED').length;
+  const criticalNotifications = (notifications ?? []).filter(n => n.severity === 'CRITICAL').length;
 
   return (
     <header className="navbar glass">
@@ -23,13 +23,13 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
         <div className="status-item">
           <Activity size={16} className="text-accent-teal" />
           <span className="status-label">ORCHESTRATION: </span>
-          <span className="status-value">{analytics.throughput > 80 ? 'OPTIMAL' : 'DEGRADED'}</span>
+          <span className="status-value">{(analytics?.throughput ?? 0) > 80 ? 'OPTIMAL' : 'DEGRADED'}</span>
           <div className="live-indicator pulse" />
         </div>
         <div className="status-item">
           <ShieldAlert size={16} className={riskCount > 0 ? 'text-danger' : ''} />
           <span className="status-label">RISK INDEX: </span>
-          <span className="status-value">{analytics.risk_index.toFixed(0)}%</span>
+          <span className="status-value">{(analytics?.risk_index ?? 0).toFixed(0)}%</span>
         </div>
       </div>
 
@@ -44,7 +44,7 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
       <div className="navbar-right">
         <div className="live-counters">
           <div className="counter-item">
-            <span className="counter-value">{workflows.length}</span>
+            <span className="counter-value">{(workflows ?? []).length}</span>
             <span className="counter-label">Active</span>
           </div>
           <div className="counter-item danger">

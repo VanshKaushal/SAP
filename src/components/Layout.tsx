@@ -4,7 +4,7 @@ import Navbar from './Navbar';
 import Atmosphere from './Atmosphere';
 import CommandPalette from './CommandPalette';
 
-import { Screen } from '../App';
+import type { Screen } from '../types/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import './Layout.css';
 

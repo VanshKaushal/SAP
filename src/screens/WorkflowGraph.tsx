@@ -1,32 +1,38 @@
 import React, { useMemo } from 'react';
 import ForceGraph2D from 'react-force-graph-2d';
+import { Network, Zap, ShieldAlert } from 'lucide-react';
 import { useWorkflowStore } from '../hooks/useWorkflowStore';
+import type { WorkflowGraphData, GraphNode, GraphLink } from '../types/graph';
 import './WorkflowGraph.css';
 
 const WorkflowGraph: React.FC = () => {
   const { workflows } = useWorkflowStore();
 
-  const data = useMemo(() => {
-    const nodes: any[] = [];
-    const links: any[] = [];
+  const data = useMemo<WorkflowGraphData>(() => {
+    const nodes: GraphNode[] = [];
+    const links: GraphLink[] = [];
     const departments = new Set<string>();
+    const safeWorkflows = workflows ?? [];
 
     // Add department central nodes
-    workflows.forEach(wf => departments.add(wf.department));
+    safeWorkflows.forEach(wf => {
+      if (wf?.department) departments.add(wf.department);
+    });
     
     Array.from(departments).forEach((dept, idx) => {
       nodes.push({
         id: `dept-${dept}`,
         name: dept,
         group: idx + 1,
-        type: 'Department',
+        type: 'department',
         val: 15,
         color: `hsl(${idx * 70}, 70%, 60%)`
       });
     });
 
     // Add workflow nodes and connect to departments
-    workflows.forEach((wf, idx) => {
+    safeWorkflows.forEach((wf, idx) => {
+      if (!wf) return;
       const color = wf.status === 'SLA_RISK' ? 'rgba(255, 69, 58, 0.9)' : 
                     wf.status === 'APPROVED' ? 'rgba(52, 199, 89, 0.9)' : 
                     wf.status === 'ESCALATED' ? 'rgba(255, 159, 10, 0.9)' : 'rgba(0, 122, 255, 0.9)';
@@ -36,7 +42,7 @@ const WorkflowGraph: React.FC = () => {
         name: wf.id,
         title: wf.title,
         group: Array.from(departments).indexOf(wf.department) + 1,
-        type: 'Workflow',
+        type: 'workflow',
         status: wf.status,
         val: wf.priority === 'CRITICAL' ? 12 : 8,
         color: color,
@@ -51,11 +57,11 @@ const WorkflowGraph: React.FC = () => {
         curvature: 0.2
       });
 
-      // Add some random cross-departmental links for "dependency tracing"
-      if (idx > 0 && Math.random() > 0.85) {
+      // Add some deterministic cross-departmental links for "dependency tracing"
+      if (idx > 0 && idx % 7 === 0 && safeWorkflows[idx - 1]) {
         links.push({
           source: wf.id,
-          target: workflows[idx - 1].id,
+          target: safeWorkflows[idx - 1].id,
           value: 2,
           color: 'rgba(0, 242, 255, 0.15)',
           curvature: 0.5,
@@ -79,7 +85,7 @@ const WorkflowGraph: React.FC = () => {
           <div className="header-meta">
             <div className="meta-item">
               <span className="label">ACTIVE NODES:</span>
-              <span className="value">{workflows.length}</span>
+              <span className="value">{(workflows ?? []).length}</span>
             </div>
             <div className="meta-item">
               <span className="label">SYNC_STATUS:</span>
@@ -95,7 +101,7 @@ const WorkflowGraph: React.FC = () => {
             <Zap size={14} className="text-accent-blue" /> <span>PULSE_SYNC: ACTIVE</span>
           </div>
           <div className="control-item danger">
-            <ShieldAlert size={14} /> <span>RISK_NODES: {workflows.filter(w => w.status === 'SLA_RISK').length}</span>
+            <ShieldAlert size={14} /> <span>RISK_NODES: {(workflows ?? []).filter(w => w?.status === 'SLA_RISK').length}</span>
           </div>
         </div>
       </header>
@@ -104,26 +110,30 @@ const WorkflowGraph: React.FC = () => {
         <ForceGraph2D
           graphData={data}
           nodeAutoColorBy="group"
-          nodeLabel={(node: any) => `${node.type}: ${node.name} ${node.title ? `(${node.title})` : ''}`}
-          linkColor={(link: any) => link.color}
+          nodeLabel={(node: unknown) => {
+            const n = node as GraphNode;
+            return `${n.type}: ${n.name} ${n.title ? `(${n.title})` : ''}`;
+          }}
+          linkColor={(link: unknown) => (link as GraphLink).color || '#fff'}
           linkCurvature="curvature"
           linkDirectionalParticles={4}
           linkDirectionalParticleWidth={2}
-          linkDirectionalParticleSpeed={(link: any) => link.value * 0.01}
-          linkDirectionalParticleColor={(link: any) => link.color?.replace('0.2', '0.8').replace('0.08', '0.4')}
+          linkDirectionalParticleSpeed={(link: unknown) => ((link as GraphLink).value || 0) * 0.01}
+          linkDirectionalParticleColor={(link: unknown) => (link as GraphLink).color?.replace('0.2', '0.8').replace('0.08', '0.4') || '#fff'}
 
-          nodeCanvasObject={(node: any, ctx, globalScale) => {
-            const label = node.name;
-            const isDept = node.type === 'Department';
-            const radius = node.val / (globalScale * 0.4);
+          nodeCanvasObject={(node: unknown, ctx, globalScale) => {
+            const n = node as GraphNode & { x: number; y: number };
+            const label = n.name;
+            const isDept = n.type === 'department';
+            const radius = (n.val || 10) / (globalScale * 0.4);
             const t = Date.now() / 1000;
 
             // Draw active node aura (energy)
-            if (node.status === 'SLA_RISK' || node.priority === 'CRITICAL') {
+            if (n.status === 'SLA_RISK' || n.priority === 'CRITICAL') {
               ctx.beginPath();
-              ctx.arc(node.x, node.y, radius * (1.5 + Math.sin(t * 4) * 0.2), 0, 2 * Math.PI, false);
-              const aura = ctx.createRadialGradient(node.x, node.y, radius, node.x, node.y, radius * 2.5);
-              aura.addColorStop(0, node.color.replace('0.9', '0.2'));
+              ctx.arc(n.x, n.y, radius * (1.5 + Math.sin(t * 4) * 0.2), 0, 2 * Math.PI, false);
+              const aura = ctx.createRadialGradient(n.x, n.y, radius, n.x, n.y, radius * 2.5);
+              aura.addColorStop(0, (n.color || '#fff').replace('0.9', '0.2'));
               aura.addColorStop(1, 'transparent');
               ctx.fillStyle = aura;
               ctx.fill();
@@ -131,15 +141,15 @@ const WorkflowGraph: React.FC = () => {
             
             // Draw node body
             ctx.beginPath();
-            ctx.arc(node.x, node.y, radius, 0, 2 * Math.PI, false);
+            ctx.arc(n.x, n.y, radius, 0, 2 * Math.PI, false);
             
-            const gradient = ctx.createRadialGradient(node.x, node.y, 0, node.x, node.y, radius);
-            gradient.addColorStop(0, node.color);
-            gradient.addColorStop(0.8, node.color.replace('0.9', '0.4'));
+            const gradient = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, radius);
+            gradient.addColorStop(0, n.color || '#fff');
+            gradient.addColorStop(0.8, (n.color || '#fff').replace('0.9', '0.4'));
             gradient.addColorStop(1, 'rgba(0,0,0,0.4)');
             
             ctx.fillStyle = gradient;
-            ctx.shadowColor = node.color;
+            ctx.shadowColor = n.color || '#fff';
             ctx.shadowBlur = (isDept ? 20 : 10) / globalScale;
             ctx.fill();
 
@@ -155,7 +165,7 @@ const WorkflowGraph: React.FC = () => {
             ctx.textBaseline = 'middle';
             ctx.fillStyle = isDept ? '#ffffff' : 'rgba(255,255,255,0.7)';
             ctx.shadowBlur = 0;
-            ctx.fillText(label, node.x, node.y + radius + (8 / globalScale));
+            ctx.fillText(label || '', n.x, n.y + radius + (8 / globalScale));
           }}
 
 

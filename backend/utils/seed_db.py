@@ -3,6 +3,7 @@ from backend.models.workflow import Workflow, Task, WorkflowStatus, PriorityLeve
 from datetime import datetime, timedelta
 import random
 
+
 def seed():
     Base.metadata.create_all(bind=engine)
     db = SessionLocal()
@@ -13,8 +14,10 @@ def seed():
     db.query(Notification).delete()
 
     departments = ['Finance', 'Procurement', 'Legal', 'HR', 'Operations']
-    priorities = [PriorityLevel.LOW, PriorityLevel.MEDIUM, PriorityLevel.HIGH, PriorityLevel.CRITICAL]
-    statuses = [WorkflowStatus.PENDING, WorkflowStatus.UNDER_REVIEW, WorkflowStatus.APPROVED, WorkflowStatus.SLA_RISK]
+    priorities = [PriorityLevel.LOW, PriorityLevel.MEDIUM,
+                  PriorityLevel.HIGH, PriorityLevel.CRITICAL]
+    statuses = [WorkflowStatus.PENDING, WorkflowStatus.UNDER_REVIEW,
+                WorkflowStatus.APPROVED, WorkflowStatus.SLA_RISK]
 
     workflows = []
     for i in range(20):
@@ -64,6 +67,7 @@ def seed():
     db.commit()
     db.close()
     print("Database seeded successfully!")
+
 
 if __name__ == "__main__":
     seed()

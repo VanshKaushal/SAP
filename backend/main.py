@@ -1,7 +1,6 @@
 import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from backend.config.settings import settings
 from backend.api import workflows, tasks, analytics, copilot, graph, health, notifications, risk_analysis, sap_integration
 
 app = FastAPI(
@@ -20,15 +19,23 @@ app.add_middleware(
 )
 
 # Include Routers
-app.include_router(workflows.router, prefix="/api/workflows", tags=["Workflows"])
+app.include_router(
+    workflows.router, prefix="/api/workflows", tags=["Workflows"])
 app.include_router(tasks.router, prefix="/api/tasks", tags=["Tasks"])
-app.include_router(analytics.router, prefix="/api/analytics", tags=["Analytics"])
+app.include_router(
+    analytics.router, prefix="/api/analytics", tags=["Analytics"])
 app.include_router(copilot.router, prefix="/api/copilot", tags=["AI Copilot"])
-app.include_router(graph.router, prefix="/api/graph", tags=["Graph Intelligence"])
-app.include_router(health.router, prefix="/api/system-health", tags=["System Health"])
-app.include_router(notifications.router, prefix="/api/notifications", tags=["Notifications"])
-app.include_router(risk_analysis.router, prefix="/api/risk-analysis", tags=["Risk Analysis"])
-app.include_router(sap_integration.router, prefix="/api/sap", tags=["SAP Integration"])
+app.include_router(graph.router, prefix="/api/graph",
+                   tags=["Graph Intelligence"])
+app.include_router(health.router, prefix="/api/system-health",
+                   tags=["System Health"])
+app.include_router(notifications.router,
+                   prefix="/api/notifications", tags=["Notifications"])
+app.include_router(risk_analysis.router,
+                   prefix="/api/risk-analysis", tags=["Risk Analysis"])
+app.include_router(sap_integration.router,
+                   prefix="/api/sap", tags=["SAP Integration"])
+
 
 @app.get("/")
 async def root():
@@ -40,4 +47,4 @@ async def root():
     }
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("backend.main:app", host="0.0.0.0", port=8000, reload=True)

@@ -1,6 +1,7 @@
 import httpx
 from backend.config.settings import settings
 
+
 class AIEngine:
     def __init__(self):
         self.api_key = settings.OPENROUTER_API_KEY
@@ -9,7 +10,7 @@ class AIEngine:
     async def get_completion(self, prompt: str, task_type: str):
         # AI Routing Engine Logic
         model = self.route_model(task_type)
-        
+
         headers = {
             "Authorization": f"Bearer {self.api_key}",
             "Content-Type": "application/json",
@@ -31,7 +32,7 @@ class AIEngine:
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": prompt}
             ],
-            "temperature": 0.3 # Low temperature for consistent enterprise analysis
+            "temperature": 0.3  # Low temperature for consistent enterprise analysis
         }
 
         async with httpx.AsyncClient() as client:
@@ -47,13 +48,13 @@ class AIEngine:
     def route_model(self, task_type: str) -> str:
         # Optimized Model Selection based on task complexity and cost
         if task_type == "workflow_summary":
-            return settings.DEEPSEEK_MODEL # Efficient for summarization
+            return settings.DEEPSEEK_MODEL  # Efficient for summarization
         elif task_type in ["risk_analysis", "bottleneck_detection"]:
-            return settings.QWEN_MODEL # Strong reasoning for analysis
+            return settings.QWEN_MODEL  # Strong reasoning for analysis
         elif task_type == "executive_summary":
-            return settings.GEMINI_MODEL # Excellent for high-level synthesis
+            return settings.GEMINI_MODEL  # Excellent for high-level synthesis
         elif task_type == "copilot":
-            return settings.LLAMA_MODEL # Fast and responsive for chat
+            return settings.LLAMA_MODEL  # Fast and responsive for chat
         else:
             return settings.LLAMA_MODEL
 

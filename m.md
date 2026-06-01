@@ -1,565 +1,330 @@
-You are now entering WORLD 2 implementation for the platform:
+MISSION: ELIMINATE ALL FAKE BEHAVIOR, HARDCODED DATA, NON-FUNCTIONAL ACTIONS, AND UI ILLUSIONS
 
-“SAP Cognitive Workflow Orchestra”
+PROJECT:
+SAP Cognitive Workflow Orchestra
 
-IMPORTANT:
-WORLD 1 IS COMPLETE.
+CURRENT PROBLEM:
 
-The frontend already contains:
-- elite cinematic UI
-- enterprise operating-system experience
-- immersive workflow graph
-- AI Copilot
-- analytics intelligence
-- orchestration simulation
-- enterprise motion systems
-- command palette
-- operational overlays
-- real-time simulation
-- startup-grade productization
+The platform visually looks impressive but behaves like a prototype.
 
-DO NOT redesign the frontend.
-DO NOT downgrade the UI.
-DO NOT alter the visual atmosphere.
-DO NOT remove motion systems.
-DO NOT simplify architecture.
+Multiple sections display identical data.
 
-Your mission is:
+Some navigation items lead to effectively the same screen.
 
-Transform the platform from:
-“high-end orchestration simulation”
+Several controls are non-functional.
 
-into:
+Graph continuously refreshes and destroys immersion.
 
-“real AI-native enterprise workflow intelligence system.”
+Numerous metrics appear hardcoded.
+
+This destroys enterprise credibility.
+
+The goal is to transform the application from:
+
+"beautiful demo"
+
+into
+
+"believable enterprise operating system."
 
 ==================================================
-PRIMARY OBJECTIVE
+ABSOLUTE RULES
 ==================================================
 
-Build the COMPLETE backend architecture and intelligence layer behind the existing frontend.
+DO NOT:
 
-The result must feel:
-- technically legitimate
-- architecturally believable
-- enterprise-grade
-- AI-native
-- orchestration-focused
-- production-oriented
+- add new screens
+- redesign UI
+- add animations
+- change branding
+- change visual identity
 
-WITHOUT overengineering.
+ONLY:
 
-==================================================
-CRITICAL RULES
-==================================================
-
-1. PRESERVE FRONTEND COMPLETELY
-The existing frontend is already elite.
-Do NOT:
-- redesign layouts
-- modify visual identity
-- remove motion systems
-- replace graph experience
-
-2. FOCUS ON ENGINEERING LEGITIMACY
-This phase is about:
-- backend architecture
-- orchestration logic
-- real AI integration
-- workflow intelligence
-- graph intelligence
-- persistence
-- deployment readiness
-
-3. DO NOT BUILD GENERIC CRUD SOFTWARE
-Avoid:
-- boilerplate admin APIs
-- meaningless abstractions
-- overcomplicated microservices
-- enterprise buzzword architecture
-
-4. THE PLATFORM MUST FEEL:
-- focused
-- intelligent
-- operational
-- AI-native
-- enterprise believable
+- fix behavior
+- fix architecture
+- fix data ownership
+- fix interaction logic
+- remove hardcoded values
+- make existing systems functional
 
 ==================================================
-WORLD 2 IMPLEMENTATION REQUIREMENTS
+PHASE 1
+NAVIGATION AUDIT
 ==================================================
 
-==================================================
-1. FASTAPI ORCHESTRATION BACKEND
-==================================================
-
-Build a complete FastAPI backend architecture.
-
-Tech Stack:
-- FastAPI
-- Uvicorn
-- SQLAlchemy
-- Pydantic
-- HTTPX
-- python-dotenv
-
-Structure:
-
-backend/
-├── api/
-├── services/
-├── models/
-├── schemas/
-├── engines/
-├── graph_engine/
-├── ai_engine/
-├── workflow_engine/
-├── analytics_engine/
-├── auth/
-├── config/
-├── utils/
-└── main.py
-
-The architecture must feel:
-- scalable
-- modular
-- production-oriented
-- enterprise clean
-
-==================================================
-2. API LAYER
-==================================================
-
-Create production-grade APIs.
-
-Required Endpoints:
-
-/api/workflows
-/api/tasks
-/api/analytics
-/api/copilot
-/api/graph
-/api/risk-analysis
-/api/escalations
-/api/system-health
-/api/notifications
-
-The APIs must:
-- support async operations
-- return structured enterprise data
-- feel operationally realistic
-- integrate cleanly with frontend systems
-
-==================================================
-3. ENTERPRISE WORKFLOW ENGINE
-==================================================
-
-Build real orchestration logic.
-
-Workflow States:
-- PENDING
-- UNDER_REVIEW
-- APPROVED
-- REJECTED
-- ESCALATED
-- SLA_RISK
-- DELAYED
-
-Implement:
-- approval routing
-- escalation triggers
-- SLA violation logic
-- workflow propagation
-- priority handling
-- orchestration transitions
+Audit every navigation item.
 
 Examples:
 
-if delay_hours > 24:
-    escalate_workflow()
+Dashboard
+Workflow Intelligence
+Risk Monitoring
+System Health
+User Management
+Analytics
+Approvals
+Settings
 
-if manager_approved:
-    route_to_finance()
+For each route determine:
 
-The workflow engine must feel:
-“enterprise operationally legitimate.”
+1. Is it unique?
+2. Is it rendering unique data?
+3. Is it rendering unique components?
+4. Is it using distinct state?
 
-==================================================
-4. OPENROUTER AI INTEGRATION
-==================================================
+Identify routes that are simply clones.
 
-Integrate REAL AI intelligence.
-
-Use:
-- OpenRouter
-- DeepSeek
-- Qwen
-- Gemini
-- Llama
-
-Implement:
-- AI routing engine
-- orchestration-aware prompting
-- workflow summarization
-- bottleneck analysis
-- SLA risk analysis
-- escalation recommendations
-- operational diagnostics
-
-The AI must feel:
-“enterprise workflow intelligence”
-
-NOT:
-“generic chatbot”
+Produce a route duplication report.
 
 ==================================================
-5. AI ROUTING ENGINE
+PHASE 2
+SCREEN DIFFERENTIATION
 ==================================================
 
-Create model routing logic.
+Ensure each screen has a distinct purpose.
+
+Dashboard:
+Executive overview.
+
+Workflow Intelligence:
+Workflow bottlenecks.
+Workflow throughput.
+Workflow dependencies.
+
+Risk Monitoring:
+Risk propagation.
+Critical workflows.
+Escalation chains.
+
+System Health:
+Backend health.
+AI health.
+Database health.
+Notification engine health.
+
+User Management:
+Users.
+Roles.
+Permissions.
+Department ownership.
+
+No two screens may display the same primary content.
+
+==================================================
+PHASE 3
+HARDCODED VALUE ERADICATION
+==================================================
+
+Search entire project for:
+
+hardcoded percentages
+hardcoded KPIs
+hardcoded counts
+hardcoded health scores
+hardcoded workflow totals
+hardcoded SLA values
+hardcoded risk scores
 
 Examples:
 
-if task == "workflow_summary":
-    model = "deepseek"
+99%
+98%
+156
+245
+1000
+85.4
 
-if task == "risk_analysis":
-    model = "qwen"
+Trace every metric.
 
-if task == "executive_summary":
-    model = "gemini"
+Replace with:
 
-The routing engine must:
-- optimize model selection
-- feel intelligent
-- feel enterprise aware
+WorkflowEngine
+Analytics Engine
+Graph Engine
+Database
+Computed Values
 
-==================================================
-6. GRAPH INTELLIGENCE ENGINE
-==================================================
-
-THIS IS THE SIGNATURE SYSTEM.
-
-Build backend graph intelligence using:
-- NetworkX
-
-Generate:
-- workflow dependency graphs
-- escalation chains
-- risk propagation paths
-- bottleneck relationships
-- workflow topology maps
-
-Backend must dynamically generate:
-- nodes
-- edges
-- risk_paths
-- relationship clusters
-
-The graph must evolve from:
-“visualization”
-into:
-“real intelligence engine.”
+Every KPI must originate from a single source of truth.
 
 ==================================================
-7. REAL DATABASE INTEGRATION
+PHASE 4
+BUTTON FUNCTIONALITY AUDIT
 ==================================================
 
-Prepare full database architecture.
+Inspect every button.
 
-Use:
-- Supabase
-- PostgreSQL
+Examples:
 
-Implement realistic enterprise entities.
+Export Audit
+Run Analysis
+Generate Report
+Optimize Workflow
+Escalate
+Approve
+Reject
+Refresh
+Settings Actions
 
-Required Tables:
+Classify:
 
-WORKFLOWS
-- id
-- title
-- status
-- department
-- assigned_to
-- priority
-- risk_level
-- sla_deadline
-- delay_hours
+Functional
+Partially Functional
+Non Functional
 
-TASKS
-- task_id
-- workflow_id
-- reviewer
-- completion_status
+Every visible action must:
 
-USERS
-- role
-- department
-- approval_authority
+perform an operation
 
-NOTIFICATIONS
-- severity
-- message
-- timestamp
+or
 
-ANALYTICS
-- throughput
-- sla_compliance
-- bottleneck_score
+show a meaningful disabled state.
+
+No fake buttons.
 
 ==================================================
-8. DATABASE SERVICE LAYER
+PHASE 5
+GRAPH STABILITY AUDIT
 ==================================================
 
-Create:
-- repository patterns
-- async DB services
-- workflow queries
-- analytics queries
-- notification persistence
-- graph persistence support
+Current issue:
 
-The architecture should feel:
-- clean
-- maintainable
-- scalable
+Graph reloads every few seconds.
 
-==================================================
-9. AUTHENTICATION ARCHITECTURE
-==================================================
+Investigate:
 
-Prepare enterprise auth layer.
+WorkflowGraph.tsx
+useWorkflowStore.ts
+WorkflowEngine.ts
 
-Use:
-- Supabase Auth
+Detect:
 
-Implement:
-- role-based access
-- department permissions
-- approval authority validation
-- protected routes
-- enterprise user models
+- state recreation
+- unstable useMemo
+- unstable node generation
+- random IDs
+- polling loops
+- interval misuse
+- dependency loops
 
-Roles:
-- Admin
-- Workflow Manager
-- Finance Reviewer
-- Procurement Officer
-- Executive Observer
+Graph should only update when data changes.
+
+Not every render.
 
 ==================================================
-10. EVENT & ORCHESTRATION SYSTEM
+PHASE 6
+STATE OWNERSHIP AUDIT
 ==================================================
 
-Build reactive enterprise event engine.
+Verify:
 
-Events:
-- workflow_created
-- workflow_approved
-- workflow_rejected
-- escalation_triggered
-- sla_breach
-- anomaly_detected
+single ownership of:
 
-The orchestration system should feel:
-- reactive
-- intelligent
-- event-driven
+workflows
+risks
+analytics
+notifications
+users
 
-==================================================
-11. SYSTEM HEALTH ENGINE
-==================================================
+Remove duplicated state.
 
-Build backend operational telemetry.
+Remove shadow state.
 
-Generate:
-- AI confidence metrics
-- orchestration throughput
-- workflow latency
-- graph synchronization health
-- queue congestion
-- escalation pressure
-
-Expose telemetry APIs for frontend.
+Remove local copies that drift.
 
 ==================================================
-12. ANALYTICS ENGINE
+PHASE 7
+EXECUTIVE DEMO TEST
 ==================================================
 
-Create:
-- SLA calculations
-- bottleneck scoring
-- department throughput analysis
-- escalation frequency tracking
-- predictive workflow metrics
+Simulate recruiter walkthrough.
 
-The analytics layer must feel:
-“executive-grade operational intelligence.”
+Click:
 
-==================================================
-13. NOTIFICATION ENGINE
-==================================================
+Dashboard
+Workflow Intelligence
+Risk Monitoring
+System Health
+User Management
 
-Build backend notification intelligence.
+Verify:
 
-Generate:
-- SLA breach alerts
-- escalation warnings
-- AI anomaly alerts
-- workflow reminders
-- operational warnings
+Every page feels like a separate subsystem.
 
-Prioritize:
-- severity
-- urgency
-- workflow impact
+No repeated cards.
+
+No repeated charts.
+
+No repeated metrics.
+
+No repeated tables.
 
 ==================================================
-14. FRONTEND INTEGRATION LAYER
+PHASE 8
+DATA FLOW AUDIT
 ==================================================
 
-Integrate backend into existing frontend WITHOUT breaking visuals.
+Trace:
 
-Connect:
-- dashboard live data
-- graph APIs
-- AI Copilot APIs
-- analytics APIs
-- notification APIs
-- orchestration telemetry
+Backend
+→ Service
+→ Store
+→ Screen
+→ Component
 
-Maintain:
-- cinematic UX
-- premium transitions
-- real-time operational feel
+For every metric.
 
-==================================================
-15. REALTIME INFRASTRUCTURE
-==================================================
+Document:
 
-Prepare realtime architecture.
+Source
+Transformations
+Consumers
 
-Use:
-- polling initially
-OR
-- FastAPI WebSockets
-
-Realtime Features:
-- live workflow updates
-- graph synchronization
-- AI alert propagation
-- escalation streams
-- notification updates
+Eliminate duplicate calculations.
 
 ==================================================
-16. API DOCUMENTATION
+PHASE 9
+ENTERPRISE LEGITIMACY CHECK
 ==================================================
 
-Generate:
-- Swagger/OpenAPI docs
-- endpoint documentation
-- schema documentation
-- orchestration API references
+Act as:
 
-The backend should feel:
-“developer-platform ready.”
+SAP Architect
+Engineering Manager
+Enterprise Customer
 
-==================================================
-17. DEPLOYMENT-READY STRUCTURE
-==================================================
+Identify:
 
-Prepare architecture for:
-- Vercel frontend deployment
-- Render backend deployment
-- Supabase integration
+fake functionality
+placeholder systems
+mock-only behavior
+hardcoded intelligence
+static analytics
 
-Environment Variables:
-- OPENROUTER_API_KEY
-- DATABASE_URL
-- SUPABASE_URL
-- SUPABASE_KEY
-
-Implement:
-- dotenv handling
-- production-safe config structure
+Replace with derived operational behavior.
 
 ==================================================
-18. SAP LEGITIMACY LAYER
+FINAL DELIVERABLE
 ==================================================
 
-Prepare lightweight SAP integration architecture.
+Produce:
 
-Implement placeholders/support for:
-- RAP Entity
-- CDS View
-- OData Service
+1. Duplicate Screen Report
+2. Hardcoded Data Report
+3. Non Functional Action Report
+4. Graph Instability Report
+5. State Ownership Report
 
-The project must legitimately support:
-- SAP UI5
-- SAP Workflow Integration
-- SAP OData connectivity
+Then implement fixes.
 
-DO NOT overengineer SAP.
+Success criteria:
 
-==================================================
-19. CODE QUALITY REQUIREMENTS
-==================================================
-
-The backend must feel:
-- senior-engineered
-- modular
-- production-clean
-- startup-grade
-
-Avoid:
-- giant files
-- duplicated orchestration logic
-- messy services
-- spaghetti architecture
-
-Use:
-- reusable engines
-- orchestration services
-- AI utilities
-- graph utilities
-- analytics utilities
-
-==================================================
-20. FINAL EXPERIENCE TARGET
-==================================================
-
-The completed system should now feel like:
-
-“A real AI-native enterprise workflow intelligence platform powering operational orchestration across a global organization.”
-
-The project should now convincingly demonstrate:
-- enterprise architecture
-- AI orchestration
-- graph intelligence
-- workflow automation
-- backend systems engineering
-- SAP integration awareness
-
-==================================================
-FINAL ABSOLUTE DIRECTIVE
-==================================================
-
-Build ONLY what strengthens:
-- orchestration realism
-- enterprise legitimacy
-- AI-native intelligence
-- graph intelligence
-- operational sophistication
-
-Do NOT add:
-- random features
-- unnecessary complexity
-- generic CRUD systems
-- fake enterprise buzzwords
-
-The platform should evolve from:
-“elite frontend simulation”
-
-into:
-
-“technically believable enterprise AI workflow operating system.”
+✓ No cloned screens
+✓ No fake KPIs
+✓ No hardcoded executive metrics
+✓ No dead buttons
+✓ No graph reload loops
+✓ Distinct navigation experiences
+✓ Enterprise-grade behavior
+✓ Recruiter-ready demonstration quality
+✓ Feels like a real operating platform rather than a visual prototype

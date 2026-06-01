@@ -8,6 +8,7 @@ from backend.workflow_engine.engine import WorkflowEngine
 
 router = APIRouter()
 
+
 @router.get("/", response_model=List[Workflow])
 def get_workflows(db: Session = Depends(get_db)):
     workflows = db.query(WorkflowModel).all()
@@ -17,6 +18,7 @@ def get_workflows(db: Session = Depends(get_db)):
         engine.process_workflow(wf.id)
     return workflows
 
+
 @router.post("/", response_model=Workflow)
 def create_workflow(workflow: WorkflowCreate, db: Session = Depends(get_db)):
     db_workflow = WorkflowModel(**workflow.model_dump())
@@ -25,12 +27,15 @@ def create_workflow(workflow: WorkflowCreate, db: Session = Depends(get_db)):
     db.refresh(db_workflow)
     return db_workflow
 
+
 @router.get("/{workflow_id}", response_model=Workflow)
 def get_workflow(workflow_id: str, db: Session = Depends(get_db)):
-    workflow = db.query(WorkflowModel).filter(WorkflowModel.id == workflow_id).first()
+    workflow = db.query(WorkflowModel).filter(
+        WorkflowModel.id == workflow_id).first()
     if not workflow:
         raise HTTPException(status_code=404, detail="Workflow not found")
     return workflow
+
 
 @router.post("/{workflow_id}/approve")
 def approve_workflow(workflow_id: str, db: Session = Depends(get_db)):
@@ -39,6 +44,7 @@ def approve_workflow(workflow_id: str, db: Session = Depends(get_db)):
     if not workflow:
         raise HTTPException(status_code=404, detail="Workflow not found")
     return {"status": "success", "new_status": workflow.status}
+
 
 @router.post("/{workflow_id}/escalate")
 def escalate_workflow(workflow_id: str, db: Session = Depends(get_db)):
