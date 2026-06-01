@@ -36,76 +36,12 @@ const ApprovalCenter: React.FC = () => {
         </div>
       </header>
 
-      <div className="approval-queue glass-card">
-        <div className="queue-header">
-          <div className="col">ID</div>
-          <div className="col">Workflow Details</div>
-          <div className="col">Priority</div>
-          <div className="col">Cognitive Risk</div>
-          <div className="col">SLA Time</div>
-          <div className="col">Actions</div>
-        </div>
-        <div className="queue-body">
-          <AnimatePresence>
-            {(pendingWorkflows ?? []).map((item) => (
-              <motion.div 
-                key={item?.id} 
-                className="queue-row"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, x: -50 }}
-                layout
-              >
-                <div className="col id-cell">{item?.id}</div>
-                <div className="col detail-cell">
-                  <span className="item-title">{item?.title}</span>
-                  <span className="item-requester">{item?.department}</span>
-                </div>
-                <div className="col priority-cell">
-                  <span className={`priority-tag ${(item?.priority ?? 'MEDIUM').toLowerCase()}`}>
-                    {item?.priority ?? 'MEDIUM'}
-                  </span>
-                </div>
-                <div className="col risk-cell">
-                  <div className={`risk-badge ${item?.status === 'SLA_RISK' ? 'high' : 'medium'}`}>
-                    <ShieldAlert size={12} />
-                    {item?.status === 'SLA_RISK' ? 'CRITICAL' : 'ELEVATED'}
-                  </div>
-                </div>
-                <div className="col sla-cell">
-                  <div className="sla-monitor">
-                    <Clock size={12} className={item?.status === 'SLA_RISK' ? 'text-danger' : 'text-accent-teal'} />
-                    <span className={item?.status === 'SLA_RISK' ? 'text-danger' : ''}>
-                      {item?.status === 'SLA_RISK' ? '00:14:22' : '04:22:15'}
-                    </span>
-                  </div>
-                  <div className="sla-bar">
-                    <div className={`sla-fill ${item?.status === 'SLA_RISK' ? 'danger' : 'optimal'}`} style={{ width: item?.status === 'SLA_RISK' ? '92%' : '45%' }}></div>
-                  </div>
-                </div>
-
-                <div className="col actions-cell">
-                  <button 
-                    className="action-icon approve" 
-                    title="Approve"
-                    onClick={() => item?.id && approveWorkflow(item.id)}
-                  >
-                    <CheckCircle2 size={18} />
-                  </button>
-                  <button 
-                    className="action-icon reject" 
-                    title="Reject"
-                    onClick={() => item?.id && rejectWorkflow(item.id)}
-                  >
-                    <XCircle size={18} />
-                  </button>
-                  <button className="action-icon info" title="Details" disabled style={{ opacity: 0.5, cursor: 'not-allowed' }}><ExternalLink size={18} /></button>
-                  <button className="action-icon more" disabled style={{ opacity: 0.5, cursor: 'not-allowed' }}><MoreVertical size={18} /></button>
-                </div>
-              </motion.div>
-            ))}
-          </AnimatePresence>
-        </div>
+      <div className="approval-queue glass-card" style={{ padding: 0, overflow: 'hidden', height: '600px' }}>
+        <iframe 
+          src="/openui5-approval/index.html" 
+          title="OpenUI5 Approval Center"
+          style={{ width: '100%', height: '100%', border: 'none' }}
+        />
       </div>
 
       <div className="approval-insights">

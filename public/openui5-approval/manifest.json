@@ -1,0 +1,47 @@
+{
+    "_version": "1.12.0",
+    "sap.app": {
+        "id": "approval.center",
+        "type": "application",
+        "i18n": "i18n/i18n.properties",
+        "applicationVersion": {
+            "version": "1.0.0"
+        },
+        "title": "Approval Center",
+        "description": "SAP Cognitive Workflow Approval Center",
+        "dataSources": {
+            "odataAPI": {
+                "uri": "/odata/Approvals",
+                "type": "JSON"
+            }
+        }
+    },
+    "sap.ui": {
+        "technology": "UI5",
+        "deviceTypes": {
+            "desktop": true,
+            "tablet": true,
+            "phone": true
+        }
+    },
+    "sap.ui5": {
+        "rootView": {
+            "viewName": "approval.center.view.App",
+            "type": "XML",
+            "async": true,
+            "id": "app"
+        },
+        "dependencies": {
+            "minUI5Version": "1.60.0",
+            "libs": {
+                "sap.m": {}
+            }
+        },
+        "models": {
+            "": {
+                "type": "sap.ui.model.json.JSONModel",
+                "dataSource": "odataAPI"
+            }
+        }
+    }
+}

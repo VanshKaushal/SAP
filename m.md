@@ -1,330 +1,350 @@
-MISSION: ELIMINATE ALL FAKE BEHAVIOR, HARDCODED DATA, NON-FUNCTIONAL ACTIONS, AND UI ILLUSIONS
+MISSION: SAP-IFICATION PROGRAM (NO REBUILD)
 
 PROJECT:
 SAP Cognitive Workflow Orchestra
 
-CURRENT PROBLEM:
+CURRENT STATUS
 
-The platform visually looks impressive but behaves like a prototype.
+The platform already contains:
 
-Multiple sections display identical data.
+* React Frontend
+* TypeScript
+* Vite
+* FastAPI Backend
+* SQLAlchemy Persistence
+* AI Copilot
+* Workflow Engine
+* Risk Engine
+* Analytics Engine
+* Notification Engine
+* Graph Intelligence
+* Approval Center
+* User Management
+* Executive Dashboard
 
-Some navigation items lead to effectively the same screen.
+The platform is feature-rich.
 
-Several controls are non-functional.
+The problem is NOT missing functionality.
 
-Graph continuously refreshes and destroys immersion.
+The problem is insufficient SAP identity.
 
-Numerous metrics appear hardcoded.
+Current perception:
 
-This destroys enterprise credibility.
+"AI Workflow Platform"
 
-The goal is to transform the application from:
+Target perception:
 
-"beautiful demo"
+"SAP AI-Native Workflow Orchestration Platform"
 
-into
-
-"believable enterprise operating system."
-
-==================================================
-ABSOLUTE RULES
-==================================================
+ABSOLUTE RULE
 
 DO NOT:
 
-- add new screens
-- redesign UI
-- add animations
-- change branding
-- change visual identity
+* rebuild frontend
+* delete React
+* rewrite application in UI5
+* restart project
+* remove existing architecture
 
-ONLY:
+Instead:
 
-- fix behavior
-- fix architecture
-- fix data ownership
-- fix interaction logic
-- remove hardcoded values
-- make existing systems functional
+SAP-IFY the existing platform.
+
+==================================================
+PROGRAM OBJECTIVE
+=================
+
+Transform the platform into something a recruiter can legitimately associate with:
+
+* SAP UI5
+* SAP Fiori
+* SAP BTP
+* SAP OData
+* SAP CDS
+* SAP Workflow Architecture
+
+while preserving the existing engineering investment.
 
 ==================================================
 PHASE 1
-NAVIGATION AUDIT
-==================================================
+SAP ARCHITECTURE LAYER
+======================
 
-Audit every navigation item.
+Create a dedicated:
 
-Examples:
+docs/sap-architecture/
 
-Dashboard
-Workflow Intelligence
-Risk Monitoring
-System Health
-User Management
-Analytics
-Approvals
-Settings
+Generate:
 
-For each route determine:
+1. System Architecture Diagram
+2. SAP BTP Deployment Diagram
+3. OData Service Map
+4. Workflow Orchestration Diagram
+5. AI Governance Diagram
 
-1. Is it unique?
-2. Is it rendering unique data?
-3. Is it rendering unique components?
-4. Is it using distinct state?
+Target Architecture:
 
-Identify routes that are simply clones.
-
-Produce a route duplication report.
+SAP UI5 / Fiori
+↓
+OData Service Layer
+↓
+Workflow Orchestration Engine
+↓
+Risk Intelligence Engine
+↓
+AI Copilot Layer
+↓
+Persistence Layer
 
 ==================================================
 PHASE 2
-SCREEN DIFFERENTIATION
-==================================================
+ODATA SERVICE LAYER
+===================
 
-Ensure each screen has a distinct purpose.
+Create SAP-style endpoints.
 
-Dashboard:
-Executive overview.
+Current:
 
-Workflow Intelligence:
-Workflow bottlenecks.
-Workflow throughput.
-Workflow dependencies.
+/api/workflows
+/api/users
+/api/analytics
 
-Risk Monitoring:
-Risk propagation.
-Critical workflows.
-Escalation chains.
+Add:
 
-System Health:
-Backend health.
-AI health.
-Database health.
-Notification engine health.
+/odata/Workflows
+/odata/Approvals
+/odata/Users
+/odata/Departments
+/odata/RiskAnalysis
+/odata/SystemHealth
 
-User Management:
-Users.
-Roles.
-Permissions.
-Department ownership.
+Implement:
 
-No two screens may display the same primary content.
+* $filter
+* $top
+* $skip
+* $orderby
+
+where feasible.
+
+Maintain compatibility with existing APIs.
+
+Do not break existing frontend.
 
 ==================================================
 PHASE 3
-HARDCODED VALUE ERADICATION
-==================================================
+CDS-INSPIRED ANALYTICS LAYER
+============================
 
-Search entire project for:
-
-hardcoded percentages
-hardcoded KPIs
-hardcoded counts
-hardcoded health scores
-hardcoded workflow totals
-hardcoded SLA values
-hardcoded risk scores
+Create CDS-style view models.
 
 Examples:
 
-99%
-98%
-156
-245
-1000
-85.4
+Z_WORKFLOW_ANALYTICS
+Z_APPROVAL_QUEUE
+Z_RISK_MONITORING
+Z_USER_WORKLOAD
+Z_SLA_PERFORMANCE
+Z_AI_DIAGNOSTICS
 
-Trace every metric.
+Implement via:
 
-Replace with:
+SQLAlchemy
+Pydantic
+Database Views
 
-WorkflowEngine
-Analytics Engine
-Graph Engine
-Database
-Computed Values
-
-Every KPI must originate from a single source of truth.
+Expose through OData endpoints.
 
 ==================================================
 PHASE 4
-BUTTON FUNCTIONALITY AUDIT
-==================================================
+SAP DOMAIN MODELING
+===================
 
-Inspect every button.
+Refactor naming conventions.
 
-Examples:
+Introduce SAP-style business entities:
 
-Export Audit
-Run Analysis
-Generate Report
-Optimize Workflow
-Escalate
-Approve
-Reject
-Refresh
-Settings Actions
+WorkflowHeader
+WorkflowItem
+ApprovalQueue
+BusinessPartner
+Department
+CostCenter
+RiskAssessment
+SLAProfile
 
-Classify:
+Map existing models.
 
-Functional
-Partially Functional
-Non Functional
-
-Every visible action must:
-
-perform an operation
-
-or
-
-show a meaningful disabled state.
-
-No fake buttons.
+Do not destroy current functionality.
 
 ==================================================
 PHASE 5
-GRAPH STABILITY AUDIT
-==================================================
+OPENUI5 MICRO-FRONTEND
+======================
 
-Current issue:
+DO NOT convert entire platform.
 
-Graph reloads every few seconds.
+Convert ONLY ONE module.
 
-Investigate:
+Preferred order:
 
-WorkflowGraph.tsx
-useWorkflowStore.ts
-WorkflowEngine.ts
+1. Approval Center
+2. User Management
+3. System Health
 
-Detect:
+Build module using:
 
-- state recreation
-- unstable useMemo
-- unstable node generation
-- random IDs
-- polling loops
-- interval misuse
-- dependency loops
+OpenUI5
 
-Graph should only update when data changes.
+Integrate with:
 
-Not every render.
+existing OData endpoints.
+
+Demonstrate:
+
+* UI5 controls
+* tables
+* filters
+* forms
+* data binding
 
 ==================================================
 PHASE 6
-STATE OWNERSHIP AUDIT
-==================================================
+FIORI DESIGN ALIGNMENT
+======================
 
-Verify:
+Audit current UI.
 
-single ownership of:
+Map screens to Fiori concepts.
 
-workflows
-risks
-analytics
-notifications
-users
+Dashboard:
+Overview Page
 
-Remove duplicated state.
+Approval Center:
+Worklist
 
-Remove shadow state.
+User Management:
+Object Management
 
-Remove local copies that drift.
+Workflow Intelligence:
+Analytical List Page
+
+Settings:
+Administrative Configuration
+
+Document alignment.
 
 ==================================================
 PHASE 7
-EXECUTIVE DEMO TEST
-==================================================
+SAP BTP READINESS
+=================
 
-Simulate recruiter walkthrough.
+Create:
 
-Click:
+btp/
 
-Dashboard
-Workflow Intelligence
-Risk Monitoring
-System Health
-User Management
+Generate:
 
-Verify:
+* mta.yaml
+* deployment documentation
+* destination configuration examples
+* xs-security samples
 
-Every page feels like a separate subsystem.
+Do not require paid SAP systems.
 
-No repeated cards.
+Goal:
 
-No repeated charts.
-
-No repeated metrics.
-
-No repeated tables.
+Show BTP deployment readiness.
 
 ==================================================
 PHASE 8
-DATA FLOW AUDIT
-==================================================
+SAP WORKFLOW POSITIONING
+========================
 
-Trace:
+Map orchestration engine to:
 
-Backend
-→ Service
-→ Store
-→ Screen
-→ Component
-
-For every metric.
+SAP Build Process Automation concepts.
 
 Document:
 
-Source
-Transformations
-Consumers
-
-Eliminate duplicate calculations.
+Workflow
+Approval
+Escalation
+Exception Handling
+Risk Evaluation
 
 ==================================================
 PHASE 9
-ENTERPRISE LEGITIMACY CHECK
-==================================================
+RECRUITER CREDIBILITY AUDIT
+===========================
 
-Act as:
+Review entire project as:
 
+SAP Recruiter
 SAP Architect
-Engineering Manager
-Enterprise Customer
+SAP Hiring Manager
 
-Identify:
+Answer:
 
-fake functionality
-placeholder systems
-mock-only behavior
-hardcoded intelligence
-static analytics
+1. Where is SAP visible?
+2. Which SAP concepts are demonstrated?
+3. Which SAP technologies are demonstrated?
+4. Which SAP technologies are simulated?
+5. What still looks generic?
 
-Replace with derived operational behavior.
+Generate gap report.
 
 ==================================================
-FINAL DELIVERABLE
+PHASE 10
+PROGRESS TRACKER
+================
+
+Create:
+
+SAPIFICATION_PROGRESS.md
+
+Track:
+
+SAP Architecture ............ %
+OData Layer ................. %
+CDS Layer ................... %
+OpenUI5 Integration ......... %
+Fiori Alignment ............. %
+BTP Readiness ............... %
+Workflow Mapping ............ %
+Recruiter Credibility ....... %
+
+Calculate:
+
+Overall SAP-ification Score
+
 ==================================================
+SUCCESS CRITERIA
+================
 
-Produce:
+The project must evolve from:
 
-1. Duplicate Screen Report
-2. Hardcoded Data Report
-3. Non Functional Action Report
-4. Graph Instability Report
-5. State Ownership Report
+"React + FastAPI AI Dashboard"
 
-Then implement fixes.
+to
 
-Success criteria:
+"SAP Cognitive Workflow Orchestra"
 
-✓ No cloned screens
-✓ No fake KPIs
-✓ No hardcoded executive metrics
-✓ No dead buttons
-✓ No graph reload loops
-✓ Distinct navigation experiences
-✓ Enterprise-grade behavior
-✓ Recruiter-ready demonstration quality
-✓ Feels like a real operating platform rather than a visual prototype
+with visible evidence of:
+
+* SAP UI5
+* Fiori Concepts
+* OData Services
+* CDS-Based Analytics
+* SAP Workflow Thinking
+* SAP BTP Readiness
+
+WITHOUT rebuilding the system from scratch.
+
+At the end provide:
+
+1. Before vs After comparison
+2. SAP-ification score
+3. Recruiter impact score
+4. Resume impact score
+5. Remaining gaps preventing true enterprise SAP readiness

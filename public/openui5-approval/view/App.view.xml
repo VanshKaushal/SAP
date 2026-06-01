@@ -1,0 +1,48 @@
+<mvc:View
+    controllerName="approval.center.controller.App"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns="sap.m">
+    <Shell id="shell">
+        <App id="app">
+            <pages>
+                <Page id="page" title="My Approval Queue">
+                    <content>
+                        <Table
+                            id="approvalsTable"
+                            items="{/}"
+                            mode="SingleSelectMaster"
+                            growing="true"
+                            growingThreshold="10">
+                            <headerToolbar>
+                                <OverflowToolbar>
+                                    <Title text="Workitems" level="H2"/>
+                                    <ToolbarSpacer/>
+                                    <SearchField width="30%" search=".onSearch"/>
+                                </OverflowToolbar>
+                            </headerToolbar>
+                            <columns>
+                                <Column><Text text="Workitem ID" /></Column>
+                                <Column><Text text="Workflow Header ID" /></Column>
+                                <Column><Text text="Processor" /></Column>
+                                <Column><Text text="Status" /></Column>
+                                <Column><Text text="Priority" /></Column>
+                            </columns>
+                            <items>
+                                <ColumnListItem>
+                                    <cells>
+                                        <Text text="{WorkitemID}" />
+                                        <Text text="{WorkflowHeaderID}" />
+                                        <Text text="{AssignedProcessor}" />
+                                        <ObjectStatus text="{ProcessingStatus}" state="{= ${ProcessingStatus} === 'PENDING' ? 'Warning' : 'Success' }"/>
+                                        <ObjectStatus text="{Priority}" state="{= ${Priority} === 'HIGH' || ${Priority} === 'CRITICAL' ? 'Error' : 'None' }"/>
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                    </content>
+                </Page>
+            </pages>
+        </App>
+    </Shell>
+</mvc:View>

@@ -1,0 +1,30 @@
+{
+  "xsappname": "workflow-orchestra",
+  "tenant-mode": "dedicated",
+  "scopes": [
+    {
+      "name": "$XSAPPNAME.WorkflowAdmin",
+      "description": "Administrator of the Cognitive Workflow Engine"
+    },
+    {
+      "name": "$XSAPPNAME.ApprovalUser",
+      "description": "Business user who can approve tasks"
+    }
+  ],
+  "role-templates": [
+    {
+      "name": "WorkflowAdminRole",
+      "description": "Role for Workflow Administrators",
+      "scope-references": [
+        "$XSAPPNAME.WorkflowAdmin"
+      ]
+    },
+    {
+      "name": "ApprovalUserRole",
+      "description": "Role for Approval Users",
+      "scope-references": [
+        "$XSAPPNAME.ApprovalUser"
+      ]
+    }
+  ]
+}

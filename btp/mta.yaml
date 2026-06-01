@@ -1,0 +1,49 @@
+_schema-version: '3.1'
+ID: sap-cognitive-workflow-orchestra
+version: 2.0.0
+description: "SAP Cognitive Workflow Orchestra - AI-Native Workflow Engine"
+
+modules:
+  - name: workflow-orchestra-approuter
+    type: approuter.nodejs
+    path: approuter
+    parameters:
+      keep-existing-routes: true
+      disk-quota: 256M
+      memory: 256M
+    requires:
+      - name: uaa_orchestra
+      - name: dest_orchestra
+
+  - name: workflow-orchestra-backend
+    type: python
+    path: backend
+    parameters:
+      memory: 512M
+      disk-quota: 1024M
+    provides:
+      - name: backend_api
+        properties:
+          url: ${default-url}
+    requires:
+      - name: uaa_orchestra
+
+  - name: workflow-orchestra-frontend
+    type: html5
+    path: public
+    parameters:
+      memory: 128M
+
+resources:
+  - name: uaa_orchestra
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      path: ./xs-security.json
+
+  - name: dest_orchestra
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: destination
+      service-plan: lite

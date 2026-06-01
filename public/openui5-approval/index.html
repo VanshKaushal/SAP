@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Approval Center - OpenUI5</title>
+    <script id="sap-ui-bootstrap"
+        src="https://openui5.hana.ondemand.com/resources/sap-ui-core.js"
+        data-sap-ui-theme="sap_horizon"
+        data-sap-ui-libs="sap.m"
+        data-sap-ui-compatVersion="edge"
+        data-sap-ui-async="true"
+        data-sap-ui-resourceroots='{"approval.center": "./"}'>
+    </script>
+    <script>
+        sap.ui.getCore().attachInit(function () {
+            sap.ui.require([
+                "sap/ui/core/ComponentContainer"
+            ], function (ComponentContainer) {
+                new ComponentContainer({
+                    name: "approval.center",
+                    settings : {
+                        id : "approvalCenter"
+                    },
+                    async: true
+                }).placeAt("content");
+            });
+        });
+    </script>
+</head>
+<body class="sapUiBody" id="content">
+</body>
+</html>

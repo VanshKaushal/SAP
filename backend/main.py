@@ -1,7 +1,7 @@
 import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from backend.api import workflows, tasks, analytics, copilot, graph, health, notifications, risk_analysis, sap_integration
+from backend.api import workflows, tasks, analytics, copilot, graph, health, notifications, risk_analysis, sap_integration, odata_routes
 
 app = FastAPI(
     title="SAP Cognitive Workflow Orchestra API",
@@ -35,6 +35,7 @@ app.include_router(risk_analysis.router,
                    prefix="/api/risk-analysis", tags=["Risk Analysis"])
 app.include_router(sap_integration.router,
                    prefix="/api/sap", tags=["SAP Integration"])
+app.include_router(odata_routes.router, prefix="/odata", tags=["OData Services"])
 
 
 @app.get("/")
